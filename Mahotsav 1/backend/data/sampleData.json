@@ -1,0 +1,540 @@
+{
+  "coordinators": [
+    {
+      "username": "admin",
+      "email": "admin@mahotsav.com",
+      "password": "admin123",
+      "firstName": "System",
+      "lastName": "Administrator",
+      "department": "Information Technology",
+      "role": "admin",
+      "phoneNumber": "+91-9876543210",
+      "isActive": true
+    },
+    {
+      "username": "cultural_coord",
+      "email": "cultural@mahotsav.com",
+      "password": "cultural123",
+      "firstName": "Priya",
+      "lastName": "Sharma",
+      "department": "Cultural Affairs",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543211",
+      "isActive": true
+    },
+    {
+      "username": "tech_coord",
+      "email": "tech@mahotsav.com",
+      "password": "tech123",
+      "firstName": "Arjun",
+      "lastName": "Patel",
+      "department": "Technical Events",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543212",
+      "isActive": true
+    },
+    {
+      "username": "sports_coord",
+      "email": "sports@mahotsav.com",
+      "password": "sports123",
+      "firstName": "Rohit",
+      "lastName": "Kumar",
+      "department": "Sports Department",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543213",
+      "isActive": true
+    },
+    {
+      "username": "literary_coord",
+      "email": "literary@mahotsav.com",
+      "password": "literary123",
+      "firstName": "Kavya",
+      "lastName": "Reddy",
+      "department": "English Literature",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543214",
+      "isActive": true
+    }
+  ],
+  "events": [
+    {
+      "title": "Classical Dance Competition",
+      "description": "A mesmerizing showcase of traditional Indian classical dance forms including Bharatanatyam, Kathak, Odissi, and Kuchipudi. Participants will be judged on technique, expression, and stage presence.",
+      "category": "cultural",
+      "eventDate": "2025-12-15T14:00:00.000Z",
+      "registrationStartDate": "2025-11-10T00:00:00.000Z",
+      "registrationEndDate": "2025-12-10T23:59:59.000Z",
+      "venue": "Main Auditorium",
+      "maxParticipants": 50,
+      "currentParticipants": 23,
+      "status": "published",
+      "rules": [
+        "Performance duration: 5-8 minutes",
+        "Traditional costumes and makeup mandatory",
+        "Own music arrangement required",
+        "No vulgarity or inappropriate content",
+        "Participants must report 30 minutes before event"
+      ],
+      "prizes": [
+        {
+          "position": "1st Place",
+          "amount": 15000,
+          "description": "Winner's Trophy + Certificate"
+        },
+        {
+          "position": "2nd Place",
+          "amount": 10000,
+          "description": "Runner-up Trophy + Certificate"
+        },
+        {
+          "position": "3rd Place",
+          "amount": 5000,
+          "description": "Third Place Trophy + Certificate"
+        }
+      ],
+      "requirements": [
+        "Valid college ID",
+        "Registration fee: ₹200",
+        "Music in USB/CD format",
+        "Costume and props (self-arranged)"
+      ],
+      "contactInfo": {
+        "email": "cultural@mahotsav.com",
+        "phone": "+91-9876543211"
+      }
+    },
+    {
+      "title": "Web Development Hackathon",
+      "description": "24-hour coding marathon focusing on innovative web solutions. Teams will build responsive web applications addressing real-world problems using modern technologies.",
+      "category": "technical",
+      "eventDate": "2025-12-12T09:00:00.000Z",
+      "registrationStartDate": "2025-11-08T00:00:00.000Z",
+      "registrationEndDate": "2025-12-08T23:59:59.000Z",
+      "venue": "Computer Lab - Block A",
+      "maxParticipants": 120,
+      "currentParticipants": 67,
+      "status": "published",
+      "rules": [
+        "Team size: 2-4 members",
+        "24-hour development window",
+        "Use of external APIs allowed",
+        "Original code only - no plagiarism",
+        "Final presentation: 10 minutes"
+      ],
+      "prizes": [
+        {
+          "position": "1st Place",
+          "amount": 25000,
+          "description": "Cash Prize + Internship Opportunities"
+        },
+        {
+          "position": "2nd Place",
+          "amount": 15000,
+          "description": "Cash Prize + Certificates"
+        },
+        {
+          "position": "3rd Place",
+          "amount": 10000,
+          "description": "Cash Prize + Certificates"
+        }
+      ],
+      "requirements": [
+        "Laptop with development environment",
+        "Valid student ID",
+        "Registration fee: ₹300 per team",
+        "Basic knowledge of web technologies"
+      ],
+      "contactInfo": {
+        "email": "tech@mahotsav.com",
+        "phone": "+91-9876543212"
+      }
+    },
+    {
+      "title": "Cricket Tournament",
+      "description": "Inter-college cricket championship with league matches followed by knockout rounds. Teams will compete in T20 format on professional ground with qualified umpires.",
+      "category": "sports",
+      "eventDate": "2025-12-20T08:00:00.000Z",
+      "registrationStartDate": "2025-11-15T00:00:00.000Z",
+      "registrationEndDate": "2025-12-15T23:59:59.000Z",
+      "venue": "Sports Ground",
+      "maxParticipants": 200,
+      "currentParticipants": 89,
+      "status": "published",
+      "rules": [
+        "Squad size: 15 players + 3 reserves",
+        "T20 format (20 overs per side)",
+        "ICC rules applicable",
+        "Dress code: Proper cricket attire",
+        "Rain reserve days available"
+      ],
+      "prizes": [
+        {
+          "position": "Winners",
+          "amount": 30000,
+          "description": "Championship Trophy + Individual Medals"
+        },
+        {
+          "position": "Runners-up",
+          "amount": 20000,
+          "description": "Runner-up Trophy + Certificates"
+        },
+        {
+          "position": "Man of the Tournament",
+          "amount": 5000,
+          "description": "Special Award + Certificate"
+        }
+      ],
+      "requirements": [
+        "Complete team roster",
+        "Medical fitness certificates",
+        "College bonafide certificates",
+        "Registration fee: ₹2000 per team"
+      ],
+      "contactInfo": {
+        "email": "sports@mahotsav.com",
+        "phone": "+91-9876543213"
+      }
+    },
+    {
+      "title": "Poetry Slam",
+      "description": "Express your thoughts and emotions through the power of spoken word. Participants will perform original poetry pieces on themes of youth, society, and dreams.",
+      "category": "literary",
+      "eventDate": "2025-12-13T16:00:00.000Z",
+      "registrationStartDate": "2025-11-12T00:00:00.000Z",
+      "registrationEndDate": "2025-12-11T23:59:59.000Z",
+      "venue": "Seminar Hall",
+      "maxParticipants": 40,
+      "currentParticipants": 18,
+      "status": "published",
+      "rules": [
+        "Performance time: 3-5 minutes",
+        "Original compositions only",
+        "English or Hindi language",
+        "No props or background music",
+        "Theme-based content preferred"
+      ],
+      "prizes": [
+        {
+          "position": "1st Place",
+          "amount": 8000,
+          "description": "Winner's Trophy + Publication Opportunity"
+        },
+        {
+          "position": "2nd Place",
+          "amount": 5000,
+          "description": "Certificate + Book Vouchers"
+        },
+        {
+          "position": "3rd Place",
+          "amount": 3000,
+          "description": "Certificate + Book Vouchers"
+        }
+      ],
+      "requirements": [
+        "Written copy of poem",
+        "Valid college ID",
+        "Registration fee: ₹100",
+        "Plagiarism-free content"
+      ],
+      "contactInfo": {
+        "email": "literary@mahotsav.com",
+        "phone": "+91-9876543214"
+      }
+    },
+    {
+      "title": "Art Exhibition & Competition",
+      "description": "Showcase your artistic talents through paintings, sketches, digital art, and sculptures. Theme: 'Vision 2030 - Sustainable Future'.",
+      "category": "art",
+      "eventDate": "2025-12-14T10:00:00.000Z",
+      "registrationStartDate": "2025-11-10T00:00:00.000Z",
+      "registrationEndDate": "2025-12-12T23:59:59.000Z",
+      "venue": "Art Gallery",
+      "maxParticipants": 75,
+      "currentParticipants": 34,
+      "status": "published",
+      "rules": [
+        "Maximum 3 entries per participant",
+        "Original artwork only",
+        "Size limit: 3x4 feet maximum",
+        "Digital prints accepted",
+        "Artist statement required"
+      ],
+      "prizes": [
+        {
+          "position": "Best in Show",
+          "amount": 12000,
+          "description": "Grand Prize + Art Supplies"
+        },
+        {
+          "position": "People's Choice",
+          "amount": 8000,
+          "description": "Special Award + Exhibition Opportunity"
+        },
+        {
+          "position": "Category Winners",
+          "amount": 5000,
+          "description": "Per Category Prize + Certificates"
+        }
+      ],
+      "requirements": [
+        "Framed/mounted artwork",
+        "Artist biography (100 words)",
+        "Registration fee: ₹150",
+        "Transportation arrangement for artwork"
+      ],
+      "contactInfo": {
+        "email": "cultural@mahotsav.com",
+        "phone": "+91-9876543211"
+      }
+    },
+    {
+      "title": "Battle of Bands",
+      "description": "Rock the stage with your band! Open to all genres - rock, pop, indie, fusion, and more. Show your musical prowess and crowd engagement skills.",
+      "category": "music",
+      "eventDate": "2025-12-16T18:00:00.000Z",
+      "registrationStartDate": "2025-11-08T00:00:00.000Z",
+      "registrationEndDate": "2025-12-14T23:59:59.000Z",
+      "venue": "Open Air Theatre",
+      "maxParticipants": 80,
+      "currentParticipants": 45,
+      "status": "published",
+      "rules": [
+        "Band size: 3-8 members",
+        "Performance time: 15-20 minutes",
+        "3-4 songs maximum",
+        "Own instruments required",
+        "Sound check 2 hours prior"
+      ],
+      "prizes": [
+        {
+          "position": "Best Band",
+          "amount": 20000,
+          "description": "Championship Trophy + Recording Opportunity"
+        },
+        {
+          "position": "Best Vocalist",
+          "amount": 5000,
+          "description": "Individual Award + Certificate"
+        },
+        {
+          "position": "Best Instrumentalist",
+          "amount": 5000,
+          "description": "Individual Award + Certificate"
+        }
+      ],
+      "requirements": [
+        "Demo recording (optional)",
+        "Complete band member list",
+        "Own instruments and equipment",
+        "Registration fee: ₹500 per band"
+      ],
+      "contactInfo": {
+        "email": "cultural@mahotsav.com",
+        "phone": "+91-9876543211"
+      }
+    }
+  ],
+  "participants": [
+    {
+      "name": "Ananya Krishnan",
+      "email": "ananya.k@student.edu",
+      "phoneNumber": "+91-9876541001",
+      "college": "Vignan University",
+      "department": "Computer Science",
+      "year": "3rd",
+      "rollNumber": "20CS001",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "additionalInfo": "5 years of Bharatanatyam training under Guru Lakshmi Devi"
+    },
+    {
+      "name": "Rahul Mehta",
+      "email": "rahul.m@student.edu",
+      "phoneNumber": "+91-9876541002",
+      "college": "Vignan University",
+      "department": "Information Technology",
+      "year": "2nd",
+      "rollNumber": "21IT045",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "additionalInfo": "Full-stack developer with React and Node.js experience",
+      "teamMembers": [
+        {
+          "name": "Priya Singh",
+          "email": "priya.s@student.edu",
+          "phoneNumber": "+91-9876541003",
+          "rollNumber": "21IT046"
+        },
+        {
+          "name": "Amit Sharma",
+          "email": "amit.s@student.edu",
+          "phoneNumber": "+91-9876541004",
+          "rollNumber": "21IT047"
+        }
+      ]
+    },
+    {
+      "name": "Vikram Captain",
+      "email": "vikram.c@student.edu",
+      "phoneNumber": "+91-9876541005",
+      "college": "Vignan University",
+      "department": "Mechanical Engineering",
+      "year": "4th",
+      "rollNumber": "19ME012",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "additionalInfo": "Team captain with 8 years cricket experience",
+      "teamMembers": [
+        {
+          "name": "Suresh Raina",
+          "email": "suresh.r@student.edu",
+          "phoneNumber": "+91-9876541006",
+          "rollNumber": "19ME013"
+        },
+        {
+          "name": "Mahesh Babu",
+          "email": "mahesh.b@student.edu",
+          "phoneNumber": "+91-9876541007",
+          "rollNumber": "20ME025"
+        },
+        {
+          "name": "Virat Singh",
+          "email": "virat.s@student.edu",
+          "phoneNumber": "+91-9876541008",
+          "rollNumber": "20ME026"
+        }
+      ]
+    },
+    {
+      "name": "Kavitha Poems",
+      "email": "kavitha.p@student.edu",
+      "phoneNumber": "+91-9876541009",
+      "college": "Vignan University",
+      "department": "English Literature",
+      "year": "1st",
+      "rollNumber": "22EN001",
+      "registrationStatus": "pending",
+      "paymentStatus": "pending",
+      "additionalInfo": "Published poet in college magazine, winner of inter-school competitions"
+    },
+    {
+      "name": "Arjun Artist",
+      "email": "arjun.a@student.edu",
+      "phoneNumber": "+91-9876541010",
+      "college": "Vignan University",
+      "department": "Fine Arts",
+      "year": "2nd",
+      "rollNumber": "21FA008",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "additionalInfo": "Specializes in abstract paintings and digital art"
+    },
+    {
+      "name": "Rock Band Leader",
+      "email": "rock.leader@student.edu",
+      "phoneNumber": "+91-9876541011",
+      "college": "Vignan University",
+      "department": "Electronics",
+      "year": "3rd",
+      "rollNumber": "20EC033",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "additionalInfo": "Lead guitarist and vocalist of 'Thunder Bolts' band",
+      "teamMembers": [
+        {
+          "name": "Bass Player",
+          "email": "bass.player@student.edu",
+          "phoneNumber": "+91-9876541012",
+          "rollNumber": "20EC034"
+        },
+        {
+          "name": "Drummer Pro",
+          "email": "drummer.pro@student.edu",
+          "phoneNumber": "+91-9876541013",
+          "rollNumber": "20EC035"
+        },
+        {
+          "name": "Keyboard Master",
+          "email": "keyboard.master@student.edu",
+          "phoneNumber": "+91-9876541014",
+          "rollNumber": "21EC019"
+        }
+      ]
+    }
+  ],
+  "eventActivities": [
+    {
+      "timestamp": "2025-11-06T10:30:00.000Z",
+      "activity": "New participant Ananya Krishnan registered for Classical Dance Competition",
+      "type": "registration",
+      "status": "approved"
+    },
+    {
+      "timestamp": "2025-11-06T10:15:00.000Z",
+      "activity": "Equipment request approved for Web Development Hackathon",
+      "type": "equipment",
+      "status": "approved"
+    },
+    {
+      "timestamp": "2025-11-06T09:45:00.000Z",
+      "activity": "Cricket Tournament venue booking confirmed",
+      "type": "venue",
+      "status": "confirmed"
+    },
+    {
+      "timestamp": "2025-11-06T09:30:00.000Z",
+      "activity": "Poetry Slam registration deadline extended by 2 days",
+      "type": "deadline",
+      "status": "updated"
+    },
+    {
+      "timestamp": "2025-11-06T09:00:00.000Z",
+      "activity": "Art Exhibition setup schedule finalized",
+      "type": "schedule",
+      "status": "confirmed"
+    },
+    {
+      "timestamp": "2025-11-06T08:45:00.000Z",
+      "activity": "Battle of Bands sound system testing completed",
+      "type": "technical",
+      "status": "completed"
+    },
+    {
+      "timestamp": "2025-11-06T08:30:00.000Z",
+      "activity": "Participant Rahul Mehta's team approved for Hackathon",
+      "type": "approval",
+      "status": "approved"
+    },
+    {
+      "timestamp": "2025-11-06T08:15:00.000Z",
+      "activity": "Prize money distribution approval received from administration",
+      "type": "finance",
+      "status": "approved"
+    }
+  ],
+  "dashboardStats": {
+    "totalEvents": 6,
+    "publishedEvents": 6,
+    "draftEvents": 0,
+    "totalRegistrations": 294,
+    "approvedParticipants": 245,
+    "pendingApprovals": 8,
+    "rejectedApplications": 2,
+    "completedTasks": 34,
+    "upcomingDeadlines": 3,
+    "totalPrizeMoney": 196000,
+    "registrationRevenue": 15750,
+    "departmentBreakdown": {
+      "cultural": 2,
+      "technical": 1,
+      "sports": 1,
+      "literary": 1,
+      "art": 1,
+      "music": 1
+    },
+    "monthlyRegistrations": [
+      { "month": "November", "count": 89 },
+      { "month": "December", "count": 156 }
+    ]
+  }
+}

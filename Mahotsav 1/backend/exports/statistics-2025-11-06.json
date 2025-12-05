@@ -1,0 +1,48 @@
+{
+  "exportDate": "2025-11-06T09:17:08.287Z",
+  "statistics": {
+    "totalCoordinators": 5,
+    "totalEvents": 6,
+    "totalParticipants": 36,
+    "approvedParticipants": 27,
+    "pendingParticipants": 7,
+    "rejectedParticipants": 2,
+    "paidParticipants": 26,
+    "publishedEvents": 6,
+    "draftEvents": 0,
+    "completedEvents": 0,
+    "totalPrizeMoney": 206000,
+    "categoryBreakdown": {
+      "cultural": 1,
+      "technical": 1,
+      "sports": 1,
+      "literary": 1,
+      "art": 1,
+      "music": 1
+    },
+    "departmentBreakdown": {
+      "Computer Science": 1,
+      "Information Technology": 1,
+      "Mechanical Engineering": 1,
+      "English Literature": 1,
+      "Fine Arts": 1,
+      "Electronics": 1,
+      "ME": 3,
+      "CH": 5,
+      "CSE": 4,
+      "ECE": 3,
+      "BT": 4,
+      "EEE": 3,
+      "CE": 5,
+      "IT": 3
+    }
+  },
+  "summary": {
+    "totalUsers": 5,
+    "totalEvents": 6,
+    "totalParticipants": 36,
+    "revenue": "₹2,06,000",
+    "topCategory": "music",
+    "systemHealth": "Operational"
+  }
+}

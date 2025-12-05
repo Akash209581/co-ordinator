@@ -1,0 +1,305 @@
+{
+  "projectInfo": {
+    "name": "Mahotsav Event Management System",
+    "version": "1.0.0",
+    "description": "Complete event management system for college festivals with coordinator dashboard and participant registration",
+    "author": "Development Team",
+    "createdDate": "2025-11-06",
+    "lastUpdated": "2025-11-06",
+    "status": "Production Ready"
+  },
+  "systemConfiguration": {
+    "frontend": {
+      "framework": "React TypeScript",
+      "port": 3000,
+      "buildTool": "Create React App",
+      "routing": "React Router v6",
+      "styling": "Custom CSS"
+    },
+    "backend": {
+      "framework": "Node.js Express",
+      "port": 5000,
+      "language": "JavaScript ES6+",
+      "authentication": "JWT",
+      "validation": "Express Validator"
+    },
+    "database": {
+      "type": "MongoDB Atlas",
+      "connectionString": "mongodb+srv://mahotsavvignan2025_db_user:mYzQ87sgJ3vKbh0L@events.nghtwjg.mongodb.net/?appName=Events",
+      "collections": ["coordinators", "events", "participants"]
+    }
+  },
+  "loginCredentials": [
+    {
+      "role": "admin",
+      "username": "admin",
+      "password": "admin123",
+      "name": "System Administrator",
+      "department": "Information Technology",
+      "permissions": ["view_all", "manage_all", "delete_all"]
+    },
+    {
+      "role": "coordinator",
+      "username": "cultural_coord",
+      "password": "cultural123",
+      "name": "Priya Sharma",
+      "department": "Cultural Affairs",
+      "permissions": ["view_own_events", "manage_participants", "create_events"]
+    },
+    {
+      "role": "coordinator",
+      "username": "tech_coord",
+      "password": "tech123",
+      "name": "Arjun Patel",
+      "department": "Technical Events",
+      "permissions": ["view_own_events", "manage_participants", "create_events"]
+    },
+    {
+      "role": "coordinator",
+      "username": "sports_coord",
+      "password": "sports123",
+      "name": "Rohit Kumar",
+      "department": "Sports Department",
+      "permissions": ["view_own_events", "manage_participants", "create_events"]
+    },
+    {
+      "role": "coordinator",
+      "username": "literary_coord",
+      "password": "literary123",
+      "name": "Kavya Reddy",
+      "department": "English Literature",
+      "permissions": ["view_own_events", "manage_participants", "create_events"]
+    }
+  ],
+  "eventCategories": [
+    {
+      "id": "cultural",
+      "name": "Cultural Events",
+      "description": "Traditional and modern cultural performances",
+      "coordinator": "cultural_coord",
+      "events": ["Classical Dance Competition", "Art Exhibition & Competition", "Battle of Bands"],
+      "totalParticipants": 102,
+      "totalPrizeMoney": 47000
+    },
+    {
+      "id": "technical",
+      "name": "Technical Events",
+      "description": "Technology and innovation competitions",
+      "coordinator": "tech_coord",
+      "events": ["Web Development Hackathon"],
+      "totalParticipants": 67,
+      "totalPrizeMoney": 50000
+    },
+    {
+      "id": "sports",
+      "name": "Sports Events",
+      "description": "Athletic and sports competitions",
+      "coordinator": "sports_coord",
+      "events": ["Cricket Tournament"],
+      "totalParticipants": 89,
+      "totalPrizeMoney": 55000
+    },
+    {
+      "id": "literary",
+      "name": "Literary Events",
+      "description": "Creative writing and literature competitions",
+      "coordinator": "literary_coord",
+      "events": ["Poetry Slam"],
+      "totalParticipants": 18,
+      "totalPrizeMoney": 16000
+    }
+  ],
+  "dashboardMetrics": {
+    "totalEvents": 6,
+    "totalParticipants": 276,
+    "approvedParticipants": 245,
+    "pendingApprovals": 23,
+    "rejectedApplications": 8,
+    "totalPrizeMoney": 206000,
+    "registrationRevenue": 25750,
+    "capacityUtilization": 68,
+    "averageParticipantsPerEvent": 46,
+    "monthlyGrowth": 15.2
+  },
+  "quickActions": [
+    {
+      "id": "manage_events",
+      "title": "Manage Events",
+      "description": "Create and manage festival events",
+      "icon": "🎭",
+      "route": "/events",
+      "permissions": ["admin", "coordinator"]
+    },
+    {
+      "id": "participant_registration",
+      "title": "Participant Registration",
+      "description": "Handle participant registrations",
+      "icon": "👥",
+      "route": "/participants",
+      "permissions": ["admin", "coordinator"]
+    },
+    {
+      "id": "resource_management",
+      "title": "Resource Management",
+      "description": "Manage venue and equipment",
+      "icon": "🏢",
+      "route": "/resources",
+      "permissions": ["admin"]
+    },
+    {
+      "id": "reports_analytics",
+      "title": "Reports & Analytics",
+      "description": "View performance analytics",
+      "icon": "📊",
+      "route": "/analytics",
+      "permissions": ["admin", "coordinator"]
+    },
+    {
+      "id": "communication",
+      "title": "Communication",
+      "description": "Send notifications and updates",
+      "icon": "📢",
+      "route": "/communications",
+      "permissions": ["admin", "coordinator"]
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "description": "Configure system settings",
+      "icon": "⚙️",
+      "route": "/settings",
+      "permissions": ["admin"]
+    }
+  ],
+  "apiEndpoints": {
+    "authentication": {
+      "login": "POST /api/auth/login",
+      "register": "POST /api/auth/register",
+      "profile": "GET /api/auth/me",
+      "logout": "POST /api/auth/logout",
+      "refresh": "POST /api/auth/refresh"
+    },
+    "coordinator": {
+      "dashboard": "GET /api/coordinator/dashboard/stats",
+      "events": "GET /api/coordinator/events",
+      "createEvent": "POST /api/coordinator/events",
+      "participants": "GET /api/coordinator/events/:eventId/participants",
+      "approveParticipant": "PUT /api/coordinator/participants/:participantId/status",
+      "profile": "GET /api/coordinator/profile",
+      "updateProfile": "PUT /api/coordinator/profile"
+    },
+    "system": {
+      "health": "GET /api/health",
+      "root": "GET /"
+    }
+  },
+  "databaseSchema": {
+    "coordinators": {
+      "fields": ["username", "email", "password", "firstName", "lastName", "department", "role", "phoneNumber", "isActive", "lastLogin"],
+      "indexes": ["username", "email"],
+      "relationships": ["hasMany events"]
+    },
+    "events": {
+      "fields": ["title", "description", "category", "eventDate", "registrationStartDate", "registrationEndDate", "venue", "maxParticipants", "currentParticipants", "coordinatorId", "status", "rules", "prizes", "requirements"],
+      "indexes": ["coordinatorId", "eventDate", "category", "status"],
+      "relationships": ["belongsTo coordinator", "hasMany participants"]
+    },
+    "participants": {
+      "fields": ["name", "email", "phoneNumber", "college", "department", "year", "rollNumber", "eventId", "registrationStatus", "paymentStatus", "teamMembers"],
+      "indexes": ["eventId", "email", "registrationStatus"],
+      "relationships": ["belongsTo event"]
+    }
+  },
+  "developmentCommands": {
+    "backend": {
+      "start": "npm start",
+      "development": "npm run dev",
+      "seedDatabase": "npm run seed:full",
+      "testAPI": "npm run test:api",
+      "installDependencies": "npm install"
+    },
+    "frontend": {
+      "start": "npm start",
+      "build": "npm run build",
+      "test": "npm test",
+      "installDependencies": "npm install"
+    }
+  },
+  "projectStructure": {
+    "backend": {
+      "server.js": "Main server file with Express configuration",
+      "models/": "MongoDB schemas (Coordinator, Event, Participant)",
+      "routes/": "API endpoints (auth, coordinator)",
+      "middleware/": "Authentication and error handling",
+      "data/": "Sample data JSON files",
+      "seedFull.js": "Database seeding script",
+      "testAPI.js": "API testing script",
+      ".env": "Environment variables"
+    },
+    "frontend": {
+      "src/components/": "React components (LoginPage, CoordinatorDashboard)",
+      "src/App.tsx": "Main React app with routing",
+      "public/": "Static assets",
+      "package.json": "Frontend dependencies"
+    }
+  },
+  "securityFeatures": [
+    "JWT token authentication",
+    "Password hashing with bcrypt (12 salt rounds)",
+    "Input validation with express-validator",
+    "CORS configuration for frontend",
+    "Rate limiting (100 requests per 15 minutes)",
+    "Security headers with Helmet",
+    "Role-based access control",
+    "Error handling middleware"
+  ],
+  "deploymentInfo": {
+    "requirements": {
+      "nodejs": ">=16.0.0",
+      "npm": ">=8.0.0",
+      "mongodb": "Atlas connection required"
+    },
+    "environment": {
+      "development": {
+        "frontend": "http://localhost:3000",
+        "backend": "http://localhost:5000"
+      }
+    },
+    "buildCommands": {
+      "backend": "npm install && npm start",
+      "frontend": "npm install && npm run build"
+    }
+  },
+  "testing": {
+    "apiTests": "Complete API endpoint testing with axios",
+    "authentication": "Login/logout flow testing",
+    "dashboard": "Statistics and data retrieval testing",
+    "roleBasedAccess": "Admin vs coordinator permission testing",
+    "databaseIntegrity": "Data relationships and constraints testing"
+  },
+  "futureEnhancements": [
+    "Event creation/editing forms",
+    "Participant registration portal",
+    "File upload for event media",
+    "Email notification system",
+    "Payment gateway integration",
+    "Advanced reporting and analytics",
+    "Mobile responsive improvements",
+    "Real-time notifications",
+    "Event scheduling calendar",
+    "Bulk participant import/export"
+  ],
+  "troubleshooting": {
+    "commonIssues": {
+      "serverNotStarting": "Check MongoDB connection string in .env file",
+      "loginFailed": "Verify credentials in database or run seed script",
+      "dashboardNoData": "Run 'npm run seed:full' to populate database",
+      "corsErrors": "Ensure frontend URL is correct in backend CORS config"
+    },
+    "logs": {
+      "backend": "Check terminal running 'npm start' in backend directory",
+      "frontend": "Check browser console for React errors",
+      "database": "Check MongoDB Atlas connection status"
+    }
+  }
+}

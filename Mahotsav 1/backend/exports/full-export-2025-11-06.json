@@ -1,0 +1,1352 @@
+{
+  "exportInfo": {
+    "exportDate": "2025-11-06T09:17:08.287Z",
+    "databaseName": "mahotsav_events",
+    "collections": [
+      "coordinators",
+      "events",
+      "participants"
+    ],
+    "totalRecords": 47,
+    "source": "MongoDB Atlas Live Database"
+  },
+  "statistics": {
+    "totalCoordinators": 5,
+    "totalEvents": 6,
+    "totalParticipants": 36,
+    "approvedParticipants": 27,
+    "pendingParticipants": 7,
+    "rejectedParticipants": 2,
+    "paidParticipants": 26,
+    "publishedEvents": 6,
+    "draftEvents": 0,
+    "completedEvents": 0,
+    "totalPrizeMoney": 206000,
+    "categoryBreakdown": {
+      "cultural": 1,
+      "technical": 1,
+      "sports": 1,
+      "literary": 1,
+      "art": 1,
+      "music": 1
+    },
+    "departmentBreakdown": {
+      "Computer Science": 1,
+      "Information Technology": 1,
+      "Mechanical Engineering": 1,
+      "English Literature": 1,
+      "Fine Arts": 1,
+      "Electronics": 1,
+      "ME": 3,
+      "CH": 5,
+      "CSE": 4,
+      "ECE": 3,
+      "BT": 4,
+      "EEE": 3,
+      "CE": 5,
+      "IT": 3
+    }
+  },
+  "coordinators": [
+    {
+      "id": "690c62013ab25ef97af07376",
+      "username": "admin",
+      "email": "admin@mahotsav.com",
+      "firstName": "System",
+      "lastName": "Administrator",
+      "department": "Information Technology",
+      "role": "admin",
+      "phoneNumber": "+91-9876543210",
+      "isActive": true,
+      "lastLogin": "2025-11-06T09:03:53.468Z",
+      "createdAt": "2025-11-06T08:53:21.177Z",
+      "updatedAt": "2025-11-06T09:03:53.799Z"
+    },
+    {
+      "id": "690c62013ab25ef97af0737a",
+      "username": "cultural_coord",
+      "email": "cultural@mahotsav.com",
+      "firstName": "Priya",
+      "lastName": "Sharma",
+      "department": "Cultural Affairs",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543211",
+      "isActive": true,
+      "lastLogin": "2025-11-06T09:04:03.386Z",
+      "createdAt": "2025-11-06T08:53:21.584Z",
+      "updatedAt": "2025-11-06T09:04:03.389Z"
+    },
+    {
+      "id": "690c62013ab25ef97af07380",
+      "username": "tech_coord",
+      "email": "tech@mahotsav.com",
+      "firstName": "Arjun",
+      "lastName": "Patel",
+      "department": "Technical Events",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543212",
+      "isActive": true,
+      "createdAt": "2025-11-06T08:53:21.974Z",
+      "updatedAt": "2025-11-06T08:53:21.974Z"
+    },
+    {
+      "id": "690c62023ab25ef97af07382",
+      "username": "sports_coord",
+      "email": "sports@mahotsav.com",
+      "firstName": "Rohit",
+      "lastName": "Kumar",
+      "department": "Sports Department",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543213",
+      "isActive": true,
+      "createdAt": "2025-11-06T08:53:22.377Z",
+      "updatedAt": "2025-11-06T08:53:22.377Z"
+    },
+    {
+      "id": "690c62033ab25ef97af07384",
+      "username": "literary_coord",
+      "email": "literary@mahotsav.com",
+      "firstName": "Kavya",
+      "lastName": "Reddy",
+      "department": "English Literature",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543214",
+      "isActive": true,
+      "createdAt": "2025-11-06T08:53:23.008Z",
+      "updatedAt": "2025-11-06T08:53:23.008Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "690c62033ab25ef97af07386",
+      "title": "Classical Dance Competition",
+      "description": "A mesmerizing showcase of traditional Indian classical dance forms including Bharatanatyam, Kathak, Odissi, and Kuchipudi. Participants will be judged on technique, expression, and stage presence.",
+      "category": "cultural",
+      "eventDate": "2025-12-15T14:00:00.000Z",
+      "registrationStartDate": "2025-11-10T00:00:00.000Z",
+      "registrationEndDate": "2025-12-10T23:59:59.000Z",
+      "venue": "Main Auditorium",
+      "maxParticipants": 50,
+      "currentParticipants": 27,
+      "coordinator": {
+        "id": "690c62013ab25ef97af0737a",
+        "name": "Priya Sharma",
+        "username": "cultural_coord"
+      },
+      "status": "published",
+      "rules": [
+        "Performance duration: 5-8 minutes",
+        "Traditional costumes and makeup mandatory",
+        "Own music arrangement required",
+        "No vulgarity or inappropriate content",
+        "Participants must report 30 minutes before event"
+      ],
+      "prizes": [
+        {
+          "position": "1st Place",
+          "amount": 15000,
+          "description": "Winner's Trophy + Certificate",
+          "_id": "690c62033ab25ef97af07387"
+        },
+        {
+          "position": "2nd Place",
+          "amount": 10000,
+          "description": "Runner-up Trophy + Certificate",
+          "_id": "690c62033ab25ef97af07388"
+        },
+        {
+          "position": "3rd Place",
+          "amount": 5000,
+          "description": "Third Place Trophy + Certificate",
+          "_id": "690c62033ab25ef97af07389"
+        }
+      ],
+      "requirements": [
+        "Valid college ID",
+        "Registration fee: ₹200",
+        "Music in USB/CD format",
+        "Costume and props (self-arranged)"
+      ],
+      "contactInfo": {
+        "email": "cultural@mahotsav.com",
+        "phone": "+91-9876543211"
+      },
+      "createdAt": "2025-11-06T08:53:23.815Z",
+      "updatedAt": "2025-11-06T08:53:35.293Z"
+    },
+    {
+      "id": "690c62043ab25ef97af0738b",
+      "title": "Web Development Hackathon",
+      "description": "24-hour coding marathon focusing on innovative web solutions. Teams will build responsive web applications addressing real-world problems using modern technologies.",
+      "category": "technical",
+      "eventDate": "2025-12-12T09:00:00.000Z",
+      "registrationStartDate": "2025-11-08T00:00:00.000Z",
+      "registrationEndDate": "2025-12-08T23:59:59.000Z",
+      "venue": "Computer Lab - Block A",
+      "maxParticipants": 120,
+      "currentParticipants": 71,
+      "coordinator": {
+        "id": "690c62013ab25ef97af07380",
+        "name": "Arjun Patel",
+        "username": "tech_coord"
+      },
+      "status": "published",
+      "rules": [
+        "Team size: 2-4 members",
+        "24-hour development window",
+        "Use of external APIs allowed",
+        "Original code only - no plagiarism",
+        "Final presentation: 10 minutes"
+      ],
+      "prizes": [
+        {
+          "position": "1st Place",
+          "amount": 25000,
+          "description": "Cash Prize + Internship Opportunities",
+          "_id": "690c62043ab25ef97af0738c"
+        },
+        {
+          "position": "2nd Place",
+          "amount": 15000,
+          "description": "Cash Prize + Certificates",
+          "_id": "690c62043ab25ef97af0738d"
+        },
+        {
+          "position": "3rd Place",
+          "amount": 10000,
+          "description": "Cash Prize + Certificates",
+          "_id": "690c62043ab25ef97af0738e"
+        }
+      ],
+      "requirements": [
+        "Laptop with development environment",
+        "Valid student ID",
+        "Registration fee: ₹300 per team",
+        "Basic knowledge of web technologies"
+      ],
+      "contactInfo": {
+        "email": "tech@mahotsav.com",
+        "phone": "+91-9876543212"
+      },
+      "createdAt": "2025-11-06T08:53:24.033Z",
+      "updatedAt": "2025-11-06T08:53:44.203Z"
+    },
+    {
+      "id": "690c62043ab25ef97af07390",
+      "title": "Cricket Tournament",
+      "description": "Inter-college cricket championship with league matches followed by knockout rounds. Teams will compete in T20 format on professional ground with qualified umpires.",
+      "category": "sports",
+      "eventDate": "2025-12-20T08:00:00.000Z",
+      "registrationStartDate": "2025-11-15T00:00:00.000Z",
+      "registrationEndDate": "2025-12-15T23:59:59.000Z",
+      "venue": "Sports Ground",
+      "maxParticipants": 200,
+      "currentParticipants": 94,
+      "coordinator": {
+        "id": "690c62023ab25ef97af07382",
+        "name": "Rohit Kumar",
+        "username": "sports_coord"
+      },
+      "status": "published",
+      "rules": [
+        "Squad size: 15 players + 3 reserves",
+        "T20 format (20 overs per side)",
+        "ICC rules applicable",
+        "Dress code: Proper cricket attire",
+        "Rain reserve days available"
+      ],
+      "prizes": [
+        {
+          "position": "Winners",
+          "amount": 30000,
+          "description": "Championship Trophy + Individual Medals",
+          "_id": "690c62043ab25ef97af07391"
+        },
+        {
+          "position": "Runners-up",
+          "amount": 20000,
+          "description": "Runner-up Trophy + Certificates",
+          "_id": "690c62043ab25ef97af07392"
+        },
+        {
+          "position": "Man of the Tournament",
+          "amount": 5000,
+          "description": "Special Award + Certificate",
+          "_id": "690c62043ab25ef97af07393"
+        }
+      ],
+      "requirements": [
+        "Complete team roster",
+        "Medical fitness certificates",
+        "College bonafide certificates",
+        "Registration fee: ₹2000 per team"
+      ],
+      "contactInfo": {
+        "email": "sports@mahotsav.com",
+        "phone": "+91-9876543213"
+      },
+      "createdAt": "2025-11-06T08:53:24.233Z",
+      "updatedAt": "2025-11-06T08:53:45.753Z"
+    },
+    {
+      "id": "690c62043ab25ef97af07395",
+      "title": "Poetry Slam",
+      "description": "Express your thoughts and emotions through the power of spoken word. Participants will perform original poetry pieces on themes of youth, society, and dreams.",
+      "category": "literary",
+      "eventDate": "2025-12-13T16:00:00.000Z",
+      "registrationStartDate": "2025-11-12T00:00:00.000Z",
+      "registrationEndDate": "2025-12-11T23:59:59.000Z",
+      "venue": "Seminar Hall",
+      "maxParticipants": 40,
+      "currentParticipants": 22,
+      "coordinator": {
+        "id": "690c62033ab25ef97af07384",
+        "name": "Kavya Reddy",
+        "username": "literary_coord"
+      },
+      "status": "published",
+      "rules": [
+        "Performance time: 3-5 minutes",
+        "Original compositions only",
+        "English or Hindi language",
+        "No props or background music",
+        "Theme-based content preferred"
+      ],
+      "prizes": [
+        {
+          "position": "1st Place",
+          "amount": 8000,
+          "description": "Winner's Trophy + Publication Opportunity",
+          "_id": "690c62043ab25ef97af07396"
+        },
+        {
+          "position": "2nd Place",
+          "amount": 5000,
+          "description": "Certificate + Book Vouchers",
+          "_id": "690c62043ab25ef97af07397"
+        },
+        {
+          "position": "3rd Place",
+          "amount": 3000,
+          "description": "Certificate + Book Vouchers",
+          "_id": "690c62043ab25ef97af07398"
+        }
+      ],
+      "requirements": [
+        "Written copy of poem",
+        "Valid college ID",
+        "Registration fee: ₹100",
+        "Plagiarism-free content"
+      ],
+      "contactInfo": {
+        "email": "literary@mahotsav.com",
+        "phone": "+91-9876543214"
+      },
+      "createdAt": "2025-11-06T08:53:24.443Z",
+      "updatedAt": "2025-11-06T08:53:39.801Z"
+    },
+    {
+      "id": "690c62043ab25ef97af0739a",
+      "title": "Art Exhibition & Competition",
+      "description": "Showcase your artistic talents through paintings, sketches, digital art, and sculptures. Theme: 'Vision 2030 - Sustainable Future'.",
+      "category": "art",
+      "eventDate": "2025-12-14T10:00:00.000Z",
+      "registrationStartDate": "2025-11-10T00:00:00.000Z",
+      "registrationEndDate": "2025-12-12T23:59:59.000Z",
+      "venue": "Art Gallery",
+      "maxParticipants": 75,
+      "currentParticipants": 34,
+      "coordinator": {
+        "id": "690c62013ab25ef97af0737a",
+        "name": "Priya Sharma",
+        "username": "cultural_coord"
+      },
+      "status": "published",
+      "rules": [
+        "Maximum 3 entries per participant",
+        "Original artwork only",
+        "Size limit: 3x4 feet maximum",
+        "Digital prints accepted",
+        "Artist statement required"
+      ],
+      "prizes": [
+        {
+          "position": "Best in Show",
+          "amount": 12000,
+          "description": "Grand Prize + Art Supplies",
+          "_id": "690c62043ab25ef97af0739b"
+        },
+        {
+          "position": "People's Choice",
+          "amount": 8000,
+          "description": "Special Award + Exhibition Opportunity",
+          "_id": "690c62043ab25ef97af0739c"
+        },
+        {
+          "position": "Category Winners",
+          "amount": 5000,
+          "description": "Per Category Prize + Certificates",
+          "_id": "690c62043ab25ef97af0739d"
+        }
+      ],
+      "requirements": [
+        "Framed/mounted artwork",
+        "Artist biography (100 words)",
+        "Registration fee: ₹150",
+        "Transportation arrangement for artwork"
+      ],
+      "contactInfo": {
+        "email": "cultural@mahotsav.com",
+        "phone": "+91-9876543211"
+      },
+      "createdAt": "2025-11-06T08:53:24.629Z",
+      "updatedAt": "2025-11-06T08:53:24.629Z"
+    },
+    {
+      "id": "690c62043ab25ef97af0739f",
+      "title": "Battle of Bands",
+      "description": "Rock the stage with your band! Open to all genres - rock, pop, indie, fusion, and more. Show your musical prowess and crowd engagement skills.",
+      "category": "music",
+      "eventDate": "2025-12-16T18:00:00.000Z",
+      "registrationStartDate": "2025-11-08T00:00:00.000Z",
+      "registrationEndDate": "2025-12-14T23:59:59.000Z",
+      "venue": "Open Air Theatre",
+      "maxParticipants": 80,
+      "currentParticipants": 50,
+      "coordinator": {
+        "id": "690c62013ab25ef97af0737a",
+        "name": "Priya Sharma",
+        "username": "cultural_coord"
+      },
+      "status": "published",
+      "rules": [
+        "Band size: 3-8 members",
+        "Performance time: 15-20 minutes",
+        "3-4 songs maximum",
+        "Own instruments required",
+        "Sound check 2 hours prior"
+      ],
+      "prizes": [
+        {
+          "position": "Best Band",
+          "amount": 20000,
+          "description": "Championship Trophy + Recording Opportunity",
+          "_id": "690c62043ab25ef97af073a0"
+        },
+        {
+          "position": "Best Vocalist",
+          "amount": 5000,
+          "description": "Individual Award + Certificate",
+          "_id": "690c62043ab25ef97af073a1"
+        },
+        {
+          "position": "Best Instrumentalist",
+          "amount": 5000,
+          "description": "Individual Award + Certificate",
+          "_id": "690c62043ab25ef97af073a2"
+        }
+      ],
+      "requirements": [
+        "Demo recording (optional)",
+        "Complete band member list",
+        "Own instruments and equipment",
+        "Registration fee: ₹500 per band"
+      ],
+      "contactInfo": {
+        "email": "cultural@mahotsav.com",
+        "phone": "+91-9876543211"
+      },
+      "createdAt": "2025-11-06T08:53:24.848Z",
+      "updatedAt": "2025-11-06T08:53:41.546Z"
+    }
+  ],
+  "participants": [
+    {
+      "id": "690c62053ab25ef97af073a4",
+      "name": "Ananya Krishnan",
+      "email": "ananya.k@student.edu",
+      "phoneNumber": "+91-9876541001",
+      "college": "Vignan University",
+      "department": "Computer Science",
+      "year": "3rd",
+      "rollNumber": "20CS001",
+      "event": {
+        "id": "690c62033ab25ef97af07386",
+        "title": "Classical Dance Competition",
+        "category": "cultural"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "5 years of Bharatanatyam training under Guru Lakshmi Devi",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:25.046Z",
+      "createdAt": "2025-11-06T08:53:25.047Z",
+      "updatedAt": "2025-11-06T08:53:25.047Z"
+    },
+    {
+      "id": "690c62053ab25ef97af073a6",
+      "name": "Rahul Mehta",
+      "email": "rahul.m@student.edu",
+      "phoneNumber": "+91-9876541002",
+      "college": "Vignan University",
+      "department": "Information Technology",
+      "year": "2nd",
+      "rollNumber": "21IT045",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Full-stack developer with React and Node.js experience",
+      "teamMembers": [
+        {
+          "name": "Priya Singh",
+          "email": "priya.s@student.edu",
+          "phoneNumber": "+91-9876541003",
+          "rollNumber": "21IT046",
+          "_id": "690c62053ab25ef97af073a7"
+        },
+        {
+          "name": "Amit Sharma",
+          "email": "amit.s@student.edu",
+          "phoneNumber": "+91-9876541004",
+          "rollNumber": "21IT047",
+          "_id": "690c62053ab25ef97af073a8"
+        }
+      ],
+      "submittedAt": "2025-11-06T08:53:25.244Z",
+      "createdAt": "2025-11-06T08:53:25.245Z",
+      "updatedAt": "2025-11-06T08:53:25.245Z"
+    },
+    {
+      "id": "690c62053ab25ef97af073aa",
+      "name": "Vikram Captain",
+      "email": "vikram.c@student.edu",
+      "phoneNumber": "+91-9876541005",
+      "college": "Vignan University",
+      "department": "Mechanical Engineering",
+      "year": "4th",
+      "rollNumber": "19ME012",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Team captain with 8 years cricket experience",
+      "teamMembers": [
+        {
+          "name": "Suresh Raina",
+          "email": "suresh.r@student.edu",
+          "phoneNumber": "+91-9876541006",
+          "rollNumber": "19ME013",
+          "_id": "690c62053ab25ef97af073ab"
+        },
+        {
+          "name": "Mahesh Babu",
+          "email": "mahesh.b@student.edu",
+          "phoneNumber": "+91-9876541007",
+          "rollNumber": "20ME025",
+          "_id": "690c62053ab25ef97af073ac"
+        },
+        {
+          "name": "Virat Singh",
+          "email": "virat.s@student.edu",
+          "phoneNumber": "+91-9876541008",
+          "rollNumber": "20ME026",
+          "_id": "690c62053ab25ef97af073ad"
+        }
+      ],
+      "submittedAt": "2025-11-06T08:53:25.468Z",
+      "createdAt": "2025-11-06T08:53:25.469Z",
+      "updatedAt": "2025-11-06T08:53:25.469Z"
+    },
+    {
+      "id": "690c62053ab25ef97af073af",
+      "name": "Kavitha Poems",
+      "email": "kavitha.p@student.edu",
+      "phoneNumber": "+91-9876541009",
+      "college": "Vignan University",
+      "department": "English Literature",
+      "year": "1st",
+      "rollNumber": "22EN001",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Published poet in college magazine, winner of inter-school competitions",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:25.992Z",
+      "createdAt": "2025-11-06T08:53:25.993Z",
+      "updatedAt": "2025-11-06T08:53:25.993Z"
+    },
+    {
+      "id": "690c62063ab25ef97af073b1",
+      "name": "Arjun Artist",
+      "email": "arjun.a@student.edu",
+      "phoneNumber": "+91-9876541010",
+      "college": "Vignan University",
+      "department": "Fine Arts",
+      "year": "2nd",
+      "rollNumber": "21FA008",
+      "event": {
+        "id": "690c62043ab25ef97af0739a",
+        "title": "Art Exhibition & Competition",
+        "category": "art"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Specializes in abstract paintings and digital art",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:26.787Z",
+      "createdAt": "2025-11-06T08:53:26.787Z",
+      "updatedAt": "2025-11-06T08:53:26.787Z"
+    },
+    {
+      "id": "690c62063ab25ef97af073b3",
+      "name": "Rock Band Leader",
+      "email": "rock.leader@student.edu",
+      "phoneNumber": "+91-9876541011",
+      "college": "Vignan University",
+      "department": "Electronics",
+      "year": "3rd",
+      "rollNumber": "20EC033",
+      "event": {
+        "id": "690c62043ab25ef97af0739f",
+        "title": "Battle of Bands",
+        "category": "music"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Lead guitarist and vocalist of 'Thunder Bolts' band",
+      "teamMembers": [
+        {
+          "name": "Bass Player",
+          "email": "bass.player@student.edu",
+          "phoneNumber": "+91-9876541012",
+          "rollNumber": "20EC034",
+          "_id": "690c62063ab25ef97af073b4"
+        },
+        {
+          "name": "Drummer Pro",
+          "email": "drummer.pro@student.edu",
+          "phoneNumber": "+91-9876541013",
+          "rollNumber": "20EC035",
+          "_id": "690c62063ab25ef97af073b5"
+        },
+        {
+          "name": "Keyboard Master",
+          "email": "keyboard.master@student.edu",
+          "phoneNumber": "+91-9876541014",
+          "rollNumber": "21EC019",
+          "_id": "690c62063ab25ef97af073b6"
+        }
+      ],
+      "submittedAt": "2025-11-06T08:53:26.998Z",
+      "createdAt": "2025-11-06T08:53:26.999Z",
+      "updatedAt": "2025-11-06T08:53:26.999Z"
+    },
+    {
+      "id": "690c62073ab25ef97af073b8",
+      "name": "Pooja Reddy 100",
+      "email": "student100@university.edu",
+      "phoneNumber": "+91-9876541000",
+      "college": "Andhra University",
+      "department": "ME",
+      "year": "1st",
+      "rollNumber": "22ME100",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 1 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:27.204Z",
+      "createdAt": "2025-11-06T08:53:27.205Z",
+      "updatedAt": "2025-11-06T08:53:27.205Z"
+    },
+    {
+      "id": "690c62073ab25ef97af073be",
+      "name": "Rohit Verma 101",
+      "email": "student101@university.edu",
+      "phoneNumber": "+91-9876541001",
+      "college": "GITAM University",
+      "department": "CH",
+      "year": "2nd",
+      "rollNumber": "21CH101",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 2 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:27.612Z",
+      "createdAt": "2025-11-06T08:53:27.613Z",
+      "updatedAt": "2025-11-06T08:53:27.613Z"
+    },
+    {
+      "id": "690c62073ab25ef97af073c4",
+      "name": "Anjali Iyer 102",
+      "email": "student102@university.edu",
+      "phoneNumber": "+91-9876541002",
+      "college": "GITAM University",
+      "department": "CSE",
+      "year": "1st",
+      "rollNumber": "22CSE102",
+      "event": {
+        "id": "690c62043ab25ef97af0739f",
+        "title": "Battle of Bands",
+        "category": "music"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 3 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:27.902Z",
+      "createdAt": "2025-11-06T08:53:27.902Z",
+      "updatedAt": "2025-11-06T08:53:27.902Z"
+    },
+    {
+      "id": "690c62083ab25ef97af073ca",
+      "name": "Nikhil Gupta 103",
+      "email": "student103@university.edu",
+      "phoneNumber": "+91-9876541003",
+      "college": "Andhra University",
+      "department": "ECE",
+      "year": "3rd",
+      "rollNumber": "20ECE103",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 4 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:28.209Z",
+      "createdAt": "2025-11-06T08:53:28.211Z",
+      "updatedAt": "2025-11-06T08:53:28.211Z"
+    },
+    {
+      "id": "690c62093ab25ef97af073d0",
+      "name": "Sneha Patel 104",
+      "email": "student104@university.edu",
+      "phoneNumber": "+91-9876541004",
+      "college": "Vignan University",
+      "department": "BT",
+      "year": "2nd",
+      "rollNumber": "21BT104",
+      "event": {
+        "id": "690c62033ab25ef97af07386",
+        "title": "Classical Dance Competition",
+        "category": "cultural"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 5 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:29.036Z",
+      "createdAt": "2025-11-06T08:53:29.036Z",
+      "updatedAt": "2025-11-06T08:53:29.036Z"
+    },
+    {
+      "id": "690c62093ab25ef97af073d6",
+      "name": "Anjali Iyer 105",
+      "email": "student105@university.edu",
+      "phoneNumber": "+91-9876541005",
+      "college": "GITAM University",
+      "department": "CSE",
+      "year": "3rd",
+      "rollNumber": "20CSE105",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 6 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:29.661Z",
+      "createdAt": "2025-11-06T08:53:29.662Z",
+      "updatedAt": "2025-11-06T08:53:29.662Z"
+    },
+    {
+      "id": "690c620a3ab25ef97af073dc",
+      "name": "Varun Malhotra 106",
+      "email": "student106@university.edu",
+      "phoneNumber": "+91-9876541006",
+      "college": "Andhra University",
+      "department": "BT",
+      "year": "4th",
+      "rollNumber": "19BT106",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "rejected",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 7 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:30.270Z",
+      "createdAt": "2025-11-06T08:53:30.271Z",
+      "updatedAt": "2025-11-06T08:53:30.271Z"
+    },
+    {
+      "id": "690c620a3ab25ef97af073e2",
+      "name": "Rohit Verma 107",
+      "email": "student107@university.edu",
+      "phoneNumber": "+91-9876541007",
+      "college": "Andhra University",
+      "department": "ME",
+      "year": "4th",
+      "rollNumber": "19ME107",
+      "event": {
+        "id": "690c62033ab25ef97af07386",
+        "title": "Classical Dance Competition",
+        "category": "cultural"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 8 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:30.786Z",
+      "createdAt": "2025-11-06T08:53:30.789Z",
+      "updatedAt": "2025-11-06T08:53:30.789Z"
+    },
+    {
+      "id": "690c620b3ab25ef97af073e8",
+      "name": "Rohit Verma 108",
+      "email": "student108@university.edu",
+      "phoneNumber": "+91-9876541008",
+      "college": "GITAM University",
+      "department": "EEE",
+      "year": "4th",
+      "rollNumber": "19EEE108",
+      "event": {
+        "id": "690c62033ab25ef97af07386",
+        "title": "Classical Dance Competition",
+        "category": "cultural"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 9 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:31.193Z",
+      "createdAt": "2025-11-06T08:53:31.194Z",
+      "updatedAt": "2025-11-06T08:53:31.194Z"
+    },
+    {
+      "id": "690c620b3ab25ef97af073ee",
+      "name": "Riya Agarwal 109",
+      "email": "student109@university.edu",
+      "phoneNumber": "+91-9876541009",
+      "college": "GITAM University",
+      "department": "CH",
+      "year": "3rd",
+      "rollNumber": "20CH109",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 10 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:31.595Z",
+      "createdAt": "2025-11-06T08:53:31.596Z",
+      "updatedAt": "2025-11-06T08:53:31.596Z"
+    },
+    {
+      "id": "690c620c3ab25ef97af073f4",
+      "name": "Shreya Das 110",
+      "email": "student110@university.edu",
+      "phoneNumber": "+91-9876541010",
+      "college": "Vignan University",
+      "department": "CH",
+      "year": "1st",
+      "rollNumber": "22CH110",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 11 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:32.016Z",
+      "createdAt": "2025-11-06T08:53:32.016Z",
+      "updatedAt": "2025-11-06T08:53:32.016Z"
+    },
+    {
+      "id": "690c620c3ab25ef97af073fa",
+      "name": "Riya Agarwal 111",
+      "email": "student111@university.edu",
+      "phoneNumber": "+91-9876541011",
+      "college": "Vignan University",
+      "department": "CE",
+      "year": "2nd",
+      "rollNumber": "21CE111",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 12 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:32.617Z",
+      "createdAt": "2025-11-06T08:53:32.618Z",
+      "updatedAt": "2025-11-06T08:53:32.618Z"
+    },
+    {
+      "id": "690c620d3ab25ef97af07400",
+      "name": "Harsh Pandey 112",
+      "email": "student112@university.edu",
+      "phoneNumber": "+91-9876541012",
+      "college": "GITAM University",
+      "department": "CE",
+      "year": "4th",
+      "rollNumber": "19CE112",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 13 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:33.226Z",
+      "createdAt": "2025-11-06T08:53:33.227Z",
+      "updatedAt": "2025-11-06T08:53:33.227Z"
+    },
+    {
+      "id": "690c620d3ab25ef97af07406",
+      "name": "Shreya Das 113",
+      "email": "student113@university.edu",
+      "phoneNumber": "+91-9876541013",
+      "college": "Andhra University",
+      "department": "CSE",
+      "year": "1st",
+      "rollNumber": "22CSE113",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 14 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:33.646Z",
+      "createdAt": "2025-11-06T08:53:33.646Z",
+      "updatedAt": "2025-11-06T08:53:33.646Z"
+    },
+    {
+      "id": "690c620e3ab25ef97af0740c",
+      "name": "Varun Malhotra 114",
+      "email": "student114@university.edu",
+      "phoneNumber": "+91-9876541014",
+      "college": "GITAM University",
+      "department": "IT",
+      "year": "2nd",
+      "rollNumber": "21IT114",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "rejected",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 15 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:34.574Z",
+      "createdAt": "2025-11-06T08:53:34.574Z",
+      "updatedAt": "2025-11-06T08:53:34.574Z"
+    },
+    {
+      "id": "690c620f3ab25ef97af07412",
+      "name": "Deepika Nair 115",
+      "email": "student115@university.edu",
+      "phoneNumber": "+91-9876541015",
+      "college": "GITAM University",
+      "department": "ECE",
+      "year": "1st",
+      "rollNumber": "22ECE115",
+      "event": {
+        "id": "690c62033ab25ef97af07386",
+        "title": "Classical Dance Competition",
+        "category": "cultural"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 16 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:35.091Z",
+      "createdAt": "2025-11-06T08:53:35.092Z",
+      "updatedAt": "2025-11-06T08:53:35.092Z"
+    },
+    {
+      "id": "690c620f3ab25ef97af07418",
+      "name": "Karan Singh 116",
+      "email": "student116@university.edu",
+      "phoneNumber": "+91-9876541016",
+      "college": "Vignan University",
+      "department": "EEE",
+      "year": "3rd",
+      "rollNumber": "20EEE116",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 17 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:35.595Z",
+      "createdAt": "2025-11-06T08:53:35.596Z",
+      "updatedAt": "2025-11-06T08:53:35.596Z"
+    },
+    {
+      "id": "690c62103ab25ef97af0741e",
+      "name": "Aditi Sharma 117",
+      "email": "student117@university.edu",
+      "phoneNumber": "+91-9876541017",
+      "college": "GITAM University",
+      "department": "ME",
+      "year": "2nd",
+      "rollNumber": "21ME117",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 18 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:36.018Z",
+      "createdAt": "2025-11-06T08:53:36.019Z",
+      "updatedAt": "2025-11-06T08:53:36.019Z"
+    },
+    {
+      "id": "690c62103ab25ef97af07424",
+      "name": "Sanjay Rao 118",
+      "email": "student118@university.edu",
+      "phoneNumber": "+91-9876541018",
+      "college": "GITAM University",
+      "department": "BT",
+      "year": "3rd",
+      "rollNumber": "20BT118",
+      "event": {
+        "id": "690c62043ab25ef97af0739f",
+        "title": "Battle of Bands",
+        "category": "music"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 19 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:36.530Z",
+      "createdAt": "2025-11-06T08:53:36.531Z",
+      "updatedAt": "2025-11-06T08:53:36.531Z"
+    },
+    {
+      "id": "690c62103ab25ef97af0742a",
+      "name": "Meera Joshi 119",
+      "email": "student119@university.edu",
+      "phoneNumber": "+91-9876541019",
+      "college": "Vignan University",
+      "department": "ECE",
+      "year": "4th",
+      "rollNumber": "19ECE119",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 20 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:36.936Z",
+      "createdAt": "2025-11-06T08:53:36.937Z",
+      "updatedAt": "2025-11-06T08:53:36.937Z"
+    },
+    {
+      "id": "690c62123ab25ef97af07430",
+      "name": "Rohit Verma 120",
+      "email": "student120@university.edu",
+      "phoneNumber": "+91-9876541020",
+      "college": "GITAM University",
+      "department": "BT",
+      "year": "1st",
+      "rollNumber": "22BT120",
+      "event": {
+        "id": "690c62043ab25ef97af0739f",
+        "title": "Battle of Bands",
+        "category": "music"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 21 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:38.977Z",
+      "createdAt": "2025-11-06T08:53:38.977Z",
+      "updatedAt": "2025-11-06T08:53:38.977Z"
+    },
+    {
+      "id": "690c62133ab25ef97af07436",
+      "name": "Varun Malhotra 121",
+      "email": "student121@university.edu",
+      "phoneNumber": "+91-9876541021",
+      "college": "Vignan University",
+      "department": "CSE",
+      "year": "4th",
+      "rollNumber": "19CSE121",
+      "event": {
+        "id": "690c62043ab25ef97af07395",
+        "title": "Poetry Slam",
+        "category": "literary"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 22 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:39.387Z",
+      "createdAt": "2025-11-06T08:53:39.387Z",
+      "updatedAt": "2025-11-06T08:53:39.387Z"
+    },
+    {
+      "id": "690c62133ab25ef97af0743c",
+      "name": "Meera Joshi 122",
+      "email": "student122@university.edu",
+      "phoneNumber": "+91-9876541022",
+      "college": "GITAM University",
+      "department": "CE",
+      "year": "2nd",
+      "rollNumber": "21CE122",
+      "event": {
+        "id": "690c62043ab25ef97af0739f",
+        "title": "Battle of Bands",
+        "category": "music"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 23 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:39.994Z",
+      "createdAt": "2025-11-06T08:53:39.995Z",
+      "updatedAt": "2025-11-06T08:53:39.995Z"
+    },
+    {
+      "id": "690c62153ab25ef97af07442",
+      "name": "Meera Joshi 123",
+      "email": "student123@university.edu",
+      "phoneNumber": "+91-9876541023",
+      "college": "Vignan University",
+      "department": "CH",
+      "year": "4th",
+      "rollNumber": "19CH123",
+      "event": {
+        "id": "690c62043ab25ef97af0739f",
+        "title": "Battle of Bands",
+        "category": "music"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 24 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:41.133Z",
+      "createdAt": "2025-11-06T08:53:41.134Z",
+      "updatedAt": "2025-11-06T08:53:41.134Z"
+    },
+    {
+      "id": "690c62163ab25ef97af07448",
+      "name": "Harsh Pandey 124",
+      "email": "student124@university.edu",
+      "phoneNumber": "+91-9876541024",
+      "college": "Vignan University",
+      "department": "IT",
+      "year": "1st",
+      "rollNumber": "22IT124",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 25 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:42.446Z",
+      "createdAt": "2025-11-06T08:53:42.447Z",
+      "updatedAt": "2025-11-06T08:53:42.447Z"
+    },
+    {
+      "id": "690c62173ab25ef97af0744e",
+      "name": "Sneha Patel 125",
+      "email": "student125@university.edu",
+      "phoneNumber": "+91-9876541025",
+      "college": "Andhra University",
+      "department": "EEE",
+      "year": "1st",
+      "rollNumber": "22EEE125",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 26 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:43.178Z",
+      "createdAt": "2025-11-06T08:53:43.179Z",
+      "updatedAt": "2025-11-06T08:53:43.179Z"
+    },
+    {
+      "id": "690c62173ab25ef97af07454",
+      "name": "Rohit Verma 126",
+      "email": "student126@university.edu",
+      "phoneNumber": "+91-9876541026",
+      "college": "Vignan University",
+      "department": "CH",
+      "year": "2nd",
+      "rollNumber": "21CH126",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 27 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:43.582Z",
+      "createdAt": "2025-11-06T08:53:43.583Z",
+      "updatedAt": "2025-11-06T08:53:43.583Z"
+    },
+    {
+      "id": "690c62173ab25ef97af0745a",
+      "name": "Meera Joshi 127",
+      "email": "student127@university.edu",
+      "phoneNumber": "+91-9876541027",
+      "college": "GITAM University",
+      "department": "IT",
+      "year": "1st",
+      "rollNumber": "22IT127",
+      "event": {
+        "id": "690c62043ab25ef97af0738b",
+        "title": "Web Development Hackathon",
+        "category": "technical"
+      },
+      "registrationStatus": "pending",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 28 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:43.998Z",
+      "createdAt": "2025-11-06T08:53:43.999Z",
+      "updatedAt": "2025-11-06T08:53:43.999Z"
+    },
+    {
+      "id": "690c62183ab25ef97af07460",
+      "name": "Aditi Sharma 128",
+      "email": "student128@university.edu",
+      "phoneNumber": "+91-9876541028",
+      "college": "Vignan University",
+      "department": "CE",
+      "year": "1st",
+      "rollNumber": "22CE128",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentId": null,
+      "additionalInfo": "Random participant 29 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:44.485Z",
+      "createdAt": "2025-11-06T08:53:44.485Z",
+      "updatedAt": "2025-11-06T08:53:44.485Z"
+    },
+    {
+      "id": "690c62193ab25ef97af07466",
+      "name": "Rohit Verma 129",
+      "email": "student129@university.edu",
+      "phoneNumber": "+91-9876541029",
+      "college": "GITAM University",
+      "department": "CE",
+      "year": "1st",
+      "rollNumber": "22CE129",
+      "event": {
+        "id": "690c62043ab25ef97af07390",
+        "title": "Cricket Tournament",
+        "category": "sports"
+      },
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentId": null,
+      "additionalInfo": "Random participant 30 for testing purposes",
+      "teamMembers": [],
+      "submittedAt": "2025-11-06T08:53:45.104Z",
+      "createdAt": "2025-11-06T08:53:45.104Z",
+      "updatedAt": "2025-11-06T08:53:45.104Z"
+    }
+  ]
+}

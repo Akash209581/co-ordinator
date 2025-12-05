@@ -1,0 +1,262 @@
+{
+  "exportInfo": {
+    "exportDate": "2025-11-06T08:45:00.000Z",
+    "databaseName": "mahotsav_events",
+    "collections": ["coordinators", "events", "participants"],
+    "totalRecords": 47,
+    "source": "MongoDB Atlas"
+  },
+  "statistics": {
+    "coordinators": 5,
+    "events": 6,
+    "participants": 36,
+    "approvedParticipants": 27,
+    "pendingParticipants": 7,
+    "rejectedParticipants": 2,
+    "totalPrizeMoney": 206000,
+    "totalRegistrationFees": 15750
+  },
+  "loginCredentials": {
+    "admin": {
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "access": "Full System Access"
+    },
+    "coordinators": {
+      "cultural_coord": {
+        "username": "cultural_coord",
+        "password": "cultural123",
+        "role": "coordinator",
+        "department": "Cultural Affairs"
+      },
+      "tech_coord": {
+        "username": "tech_coord",
+        "password": "tech123",
+        "role": "coordinator",
+        "department": "Technical Events"
+      },
+      "sports_coord": {
+        "username": "sports_coord",
+        "password": "sports123",
+        "role": "coordinator",
+        "department": "Sports Department"
+      },
+      "literary_coord": {
+        "username": "literary_coord",
+        "password": "literary123",
+        "role": "coordinator",
+        "department": "English Literature"
+      }
+    }
+  },
+  "coordinatorList": [
+    {
+      "username": "admin",
+      "password": "admin123",
+      "name": "System Administrator",
+      "email": "admin@mahotsav.com",
+      "department": "Information Technology",
+      "role": "admin",
+      "eventsManaged": 0,
+      "isActive": true
+    },
+    {
+      "username": "cultural_coord",
+      "password": "cultural123",
+      "name": "Priya Sharma",
+      "email": "cultural@mahotsav.com",
+      "department": "Cultural Affairs",
+      "role": "coordinator",
+      "eventsManaged": 3,
+      "isActive": true
+    },
+    {
+      "username": "tech_coord",
+      "password": "tech123",
+      "name": "Arjun Patel",
+      "email": "tech@mahotsav.com",
+      "department": "Technical Events",
+      "role": "coordinator",
+      "eventsManaged": 1,
+      "isActive": true
+    },
+    {
+      "username": "sports_coord",
+      "password": "sports123",
+      "name": "Rohit Kumar",
+      "email": "sports@mahotsav.com",
+      "department": "Sports Department",
+      "role": "coordinator",
+      "eventsManaged": 1,
+      "isActive": true
+    },
+    {
+      "username": "literary_coord",
+      "password": "literary123",
+      "name": "Kavya Reddy",
+      "email": "literary@mahotsav.com",
+      "department": "English Literature",
+      "role": "coordinator",
+      "eventsManaged": 1,
+      "isActive": true
+    }
+  ],
+  "eventsSummary": [
+    {
+      "title": "Classical Dance Competition",
+      "category": "cultural",
+      "coordinator": "Priya Sharma",
+      "eventDate": "2025-12-15",
+      "venue": "Main Auditorium",
+      "maxParticipants": 50,
+      "currentParticipants": 23,
+      "status": "published",
+      "prizeMoney": 30000,
+      "registrationFee": 200
+    },
+    {
+      "title": "Web Development Hackathon",
+      "category": "technical",
+      "coordinator": "Arjun Patel",
+      "eventDate": "2025-12-12",
+      "venue": "Computer Lab - Block A",
+      "maxParticipants": 120,
+      "currentParticipants": 67,
+      "status": "published",
+      "prizeMoney": 50000,
+      "registrationFee": 300
+    },
+    {
+      "title": "Cricket Tournament",
+      "category": "sports",
+      "coordinator": "Rohit Kumar",
+      "eventDate": "2025-12-20",
+      "venue": "Sports Ground",
+      "maxParticipants": 200,
+      "currentParticipants": 89,
+      "status": "published",
+      "prizeMoney": 55000,
+      "registrationFee": 2000
+    },
+    {
+      "title": "Poetry Slam",
+      "category": "literary",
+      "coordinator": "Kavya Reddy",
+      "eventDate": "2025-12-13",
+      "venue": "Seminar Hall",
+      "maxParticipants": 40,
+      "currentParticipants": 18,
+      "status": "published",
+      "prizeMoney": 16000,
+      "registrationFee": 100
+    },
+    {
+      "title": "Art Exhibition & Competition",
+      "category": "art",
+      "coordinator": "Priya Sharma",
+      "eventDate": "2025-12-14",
+      "venue": "Art Gallery",
+      "maxParticipants": 75,
+      "currentParticipants": 34,
+      "status": "published",
+      "prizeMoney": 25000,
+      "registrationFee": 150
+    },
+    {
+      "title": "Battle of Bands",
+      "category": "music",
+      "coordinator": "Priya Sharma",
+      "eventDate": "2025-12-16",
+      "venue": "Open Air Theatre",
+      "maxParticipants": 80,
+      "currentParticipants": 45,
+      "status": "published",
+      "prizeMoney": 30000,
+      "registrationFee": 500
+    }
+  ],
+  "participantDistribution": {
+    "byCategory": {
+      "cultural": 102,
+      "technical": 67,
+      "sports": 89,
+      "literary": 18
+    },
+    "byStatus": {
+      "approved": 245,
+      "pending": 23,
+      "rejected": 8
+    },
+    "byYear": {
+      "1st": 69,
+      "2nd": 92,
+      "3rd": 78,
+      "4th": 37
+    },
+    "byDepartment": {
+      "CSE": 89,
+      "ECE": 67,
+      "ME": 45,
+      "CE": 34,
+      "EEE": 23,
+      "IT": 18
+    }
+  },
+  "recentActivities": [
+    {
+      "timestamp": "2025-11-06T08:30:00.000Z",
+      "activity": "Ananya Krishnan registered for Classical Dance Competition",
+      "type": "registration",
+      "status": "approved"
+    },
+    {
+      "timestamp": "2025-11-06T08:15:00.000Z",
+      "activity": "Rahul Mehta's team approved for Web Development Hackathon",
+      "type": "approval",
+      "status": "approved"
+    },
+    {
+      "timestamp": "2025-11-06T08:00:00.000Z",
+      "activity": "Cricket Tournament venue booking confirmed",
+      "type": "venue",
+      "status": "confirmed"
+    },
+    {
+      "timestamp": "2025-11-06T07:45:00.000Z",
+      "activity": "Poetry Slam registration deadline extended",
+      "type": "deadline",
+      "status": "updated"
+    },
+    {
+      "timestamp": "2025-11-06T07:30:00.000Z",
+      "activity": "Art Exhibition setup schedule finalized",
+      "type": "schedule",
+      "status": "confirmed"
+    }
+  ],
+  "financialSummary": {
+    "totalRevenue": {
+      "registrationFees": 15750,
+      "sponsorships": 50000,
+      "total": 65750
+    },
+    "totalExpenses": {
+      "prizeMoney": 206000,
+      "venue": 25000,
+      "equipment": 15000,
+      "marketing": 8000,
+      "total": 254000
+    },
+    "netBalance": -188250,
+    "fundingRequired": 188250
+  },
+  "systemHealth": {
+    "databaseStatus": "Connected",
+    "serverStatus": "Running",
+    "lastBackup": "2025-11-06T08:00:00.000Z",
+    "uptime": "2 hours 45 minutes",
+    "activeUsers": 5,
+    "apiCalls": 127
+  }
+}

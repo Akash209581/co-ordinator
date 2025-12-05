@@ -1,0 +1,65 @@
+{
+  "exportDate": "2025-11-06T09:17:08.287Z",
+  "events": [
+    {
+      "title": "Classical Dance Competition",
+      "category": "cultural",
+      "coordinator": "Priya Sharma",
+      "participants": "27/50",
+      "status": "published",
+      "eventDate": "2025-12-15T14:00:00.000Z",
+      "venue": "Main Auditorium",
+      "prizeMoney": 30000
+    },
+    {
+      "title": "Web Development Hackathon",
+      "category": "technical",
+      "coordinator": "Arjun Patel",
+      "participants": "71/120",
+      "status": "published",
+      "eventDate": "2025-12-12T09:00:00.000Z",
+      "venue": "Computer Lab - Block A",
+      "prizeMoney": 50000
+    },
+    {
+      "title": "Cricket Tournament",
+      "category": "sports",
+      "coordinator": "Rohit Kumar",
+      "participants": "94/200",
+      "status": "published",
+      "eventDate": "2025-12-20T08:00:00.000Z",
+      "venue": "Sports Ground",
+      "prizeMoney": 55000
+    },
+    {
+      "title": "Poetry Slam",
+      "category": "literary",
+      "coordinator": "Kavya Reddy",
+      "participants": "22/40",
+      "status": "published",
+      "eventDate": "2025-12-13T16:00:00.000Z",
+      "venue": "Seminar Hall",
+      "prizeMoney": 16000
+    },
+    {
+      "title": "Art Exhibition & Competition",
+      "category": "art",
+      "coordinator": "Priya Sharma",
+      "participants": "34/75",
+      "status": "published",
+      "eventDate": "2025-12-14T10:00:00.000Z",
+      "venue": "Art Gallery",
+      "prizeMoney": 25000
+    },
+    {
+      "title": "Battle of Bands",
+      "category": "music",
+      "coordinator": "Priya Sharma",
+      "participants": "50/80",
+      "status": "published",
+      "eventDate": "2025-12-16T18:00:00.000Z",
+      "venue": "Open Air Theatre",
+      "prizeMoney": 30000
+    }
+  ]
+}

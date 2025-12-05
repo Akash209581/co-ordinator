@@ -1,0 +1,383 @@
+{
+  "coordinators": [
+    {
+      "username": "admin",
+      "email": "admin@mahotsav.com",
+      "password": "admin123",
+      "firstName": "System",
+      "lastName": "Administrator",
+      "department": "Information Technology",
+      "role": "admin",
+      "phoneNumber": "+91-9876543210",
+      "isActive": true
+    },
+    {
+      "username": "cultural_coord",
+      "email": "cultural@mahotsav.com",
+      "password": "cultural123",
+      "firstName": "Priya",
+      "lastName": "Sharma",
+      "department": "Cultural Affairs",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543211",
+      "isActive": true
+    },
+    {
+      "username": "tech_coord",
+      "email": "tech@mahotsav.com",
+      "password": "tech123",
+      "firstName": "Arjun",
+      "lastName": "Patel",
+      "department": "Technical Events",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543212",
+      "isActive": true
+    },
+    {
+      "username": "sports_coord",
+      "email": "sports@mahotsav.com",
+      "password": "sports123",
+      "firstName": "Rohit",
+      "lastName": "Kumar",
+      "department": "Sports Department",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543213",
+      "isActive": true
+    },
+    {
+      "username": "literary_coord",
+      "email": "literary@mahotsav.com",
+      "password": "literary123",
+      "firstName": "Kavya",
+      "lastName": "Reddy",
+      "department": "English Literature",
+      "role": "coordinator",
+      "phoneNumber": "+91-9876543214",
+      "isActive": true
+    }
+  ],
+  "events": [
+    {
+      "title": "Classical Dance Competition",
+      "description": "A mesmerizing showcase of traditional Indian classical dance forms including Bharatanatyam, Kathak, Odissi, and Kuchipudi. Participants will be judged on technique, expression, and stage presence.",
+      "category": "cultural",
+      "eventDate": "2025-12-15T10:00:00.000Z",
+      "registrationStartDate": "2025-11-01T00:00:00.000Z",
+      "registrationEndDate": "2025-12-10T23:59:59.000Z",
+      "registrationDeadline": "2025-12-10T23:59:59.000Z",
+      "venue": "Main Auditorium",
+      "maxParticipants": 50,
+      "currentParticipants": 23,
+      "registrationFee": 200,
+      "prizeMoney": 30000,
+      "prizeDistribution": [15000, 10000, 5000],
+      "rules": [
+        "Performance duration: 8-10 minutes",
+        "Classical forms only",
+        "Participants must report 30 minutes before event"
+      ],
+      "status": "published",
+      "isTeamEvent": false
+    },
+    {
+      "title": "Web Development Hackathon",
+      "description": "24-hour coding marathon where teams build innovative web applications. Participants will work on real-world problems and present their solutions to industry experts.",
+      "category": "technical",
+      "eventDate": "2025-12-12T09:00:00.000Z",
+      "registrationStartDate": "2025-11-01T00:00:00.000Z",
+      "registrationEndDate": "2025-12-08T23:59:59.000Z",
+      "registrationDeadline": "2025-12-08T23:59:59.000Z",
+      "venue": "Computer Lab - Block A",
+      "maxParticipants": 120,
+      "currentParticipants": 67,
+      "registrationFee": 300,
+      "prizeMoney": 50000,
+      "prizeDistribution": [25000, 15000, 10000],
+      "rules": [
+        "Team size: 2-4 members",
+        "24-hour duration",
+        "All programming languages allowed",
+        "Original code only"
+      ],
+      "status": "published",
+      "isTeamEvent": true,
+      "teamSize": { "min": 2, "max": 4 }
+    },
+    {
+      "title": "Cricket Tournament",
+      "description": "Inter-college cricket championship featuring teams from various departments. Tournament follows standard T20 format with league and knockout rounds.",
+      "category": "sports",
+      "eventDate": "2025-12-20T08:00:00.000Z",
+      "registrationStartDate": "2025-11-01T00:00:00.000Z",
+      "registrationEndDate": "2025-12-15T23:59:59.000Z",
+      "registrationDeadline": "2025-12-15T23:59:59.000Z",
+      "venue": "Sports Ground",
+      "maxParticipants": 200,
+      "currentParticipants": 89,
+      "registrationFee": 2000,
+      "prizeMoney": 55000,
+      "prizeDistribution": [30000, 20000, 5000],
+      "rules": [
+        "Team size: 15 players (11 playing + 4 substitutes)",
+        "T20 format",
+        "Standard ICC rules apply",
+        "All players must be current students"
+      ],
+      "status": "published",
+      "isTeamEvent": true,
+      "teamSize": { "min": 11, "max": 15 }
+    },
+    {
+      "title": "Poetry Slam",
+      "description": "Express your thoughts and emotions through the power of spoken word. Participants will perform original poetry pieces on themes of youth, society, and dreams.",
+      "category": "literary",
+      "eventDate": "2025-12-13T14:00:00.000Z",
+      "registrationStartDate": "2025-11-01T00:00:00.000Z",
+      "registrationEndDate": "2025-12-11T23:59:59.000Z",
+      "registrationDeadline": "2025-12-11T23:59:59.000Z",
+      "venue": "Seminar Hall",
+      "maxParticipants": 40,
+      "currentParticipants": 18,
+      "registrationFee": 100,
+      "prizeMoney": 16000,
+      "prizeDistribution": [8000, 5000, 3000],
+      "rules": [
+        "Original poetry only",
+        "Performance time: 3-5 minutes",
+        "English or regional languages allowed",
+        "No offensive content"
+      ],
+      "status": "published",
+      "isTeamEvent": false
+    },
+    {
+      "title": "Art Exhibition & Competition",
+      "description": "Showcase your artistic talents through paintings, sketches, digital art, and sculptures. Theme: 'Harmony in Diversity' - celebrating India's cultural richness.",
+      "category": "art",
+      "eventDate": "2025-12-14T10:00:00.000Z",
+      "registrationStartDate": "2025-11-01T00:00:00.000Z",
+      "registrationEndDate": "2025-12-09T23:59:59.000Z",
+      "registrationDeadline": "2025-12-09T23:59:59.000Z",
+      "venue": "Art Gallery",
+      "maxParticipants": 75,
+      "currentParticipants": 34,
+      "registrationFee": 150,
+      "prizeMoney": 25000,
+      "prizeDistribution": [12000, 8000, 5000],
+      "rules": [
+        "All art forms welcome",
+        "Original work only",
+        "Theme must be followed",
+        "Artwork submission deadline: Dec 12"
+      ],
+      "status": "published",
+      "isTeamEvent": false
+    },
+    {
+      "title": "Battle of Bands",
+      "description": "Ultimate musical showdown where bands compete in various genres. From rock to classical fusion, showcase your musical prowess and win exciting prizes.",
+      "category": "music",
+      "eventDate": "2025-12-16T18:00:00.000Z",
+      "registrationStartDate": "2025-11-01T00:00:00.000Z",
+      "registrationEndDate": "2025-12-12T23:59:59.000Z",
+      "registrationDeadline": "2025-12-12T23:59:59.000Z",
+      "venue": "Open Air Theatre",
+      "maxParticipants": 80,
+      "currentParticipants": 45,
+      "registrationFee": 500,
+      "prizeMoney": 30000,
+      "prizeDistribution": [15000, 10000, 5000],
+      "rules": [
+        "Band size: 3-8 members",
+        "Performance time: 15-20 minutes",
+        "All genres welcome",
+        "Own instruments preferred"
+      ],
+      "status": "published",
+      "isTeamEvent": true,
+      "teamSize": { "min": 3, "max": 8 }
+    }
+  ],
+  "participants": [
+    {
+      "participantId": "MH25000001",
+      "name": "Ananya Krishnan",
+      "email": "ananya.k@student.edu",
+      "phoneNumber": "+91-9876541001",
+      "college": "Vignan University",
+      "department": "Computer Science",
+      "year": "3rd",
+      "rollNumber": "20CS001",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentAmount": 200,
+      "paidAmount": 200,
+      "paymentDate": "2025-11-05T10:30:00.000Z",
+      "paymentMethod": "cash",
+      "paymentNotes": "Payment received in full",
+      "additionalInfo": "5 years of Bharatanatyam training under Guru Lakshmi Devi"
+    },
+    {
+      "participantId": "MH25000002",
+      "name": "Rahul Mehta",
+      "email": "rahul.m@student.edu",
+      "phoneNumber": "+91-9876541002",
+      "college": "Vignan University",
+      "department": "Information Technology",
+      "year": "2nd",
+      "rollNumber": "21IT045",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentAmount": 300,
+      "paidAmount": 300,
+      "paymentDate": "2025-11-04T14:15:00.000Z",
+      "paymentMethod": "upi",
+      "paymentNotes": "Team leader payment",
+      "additionalInfo": "Full-stack developer with React and Node.js experience",
+      "teamMembers": [
+        {
+          "name": "Priya Singh",
+          "email": "priya.s@student.edu",
+          "phoneNumber": "+91-9876541003",
+          "rollNumber": "21IT046"
+        },
+        {
+          "name": "Amit Sharma",
+          "email": "amit.s@student.edu",
+          "phoneNumber": "+91-9876541004",
+          "rollNumber": "21IT047"
+        }
+      ]
+    },
+    {
+      "participantId": "MH25000003",
+      "name": "Vikram Captain",
+      "email": "vikram.c@student.edu",
+      "phoneNumber": "+91-9876541005",
+      "college": "Vignan University",
+      "department": "Mechanical Engineering",
+      "year": "4th",
+      "rollNumber": "19ME012",
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentAmount": 2000,
+      "paidAmount": 1500,
+      "paymentDate": "2025-11-03T16:45:00.000Z",
+      "paymentMethod": "cash",
+      "paymentNotes": "Partial payment received, balance ₹500 pending",
+      "additionalInfo": "Team captain with 8 years cricket experience",
+      "teamMembers": [
+        {
+          "name": "Rohit Sharma",
+          "email": "rohit.s@student.edu",
+          "phoneNumber": "+91-9876541006",
+          "rollNumber": "19ME013"
+        }
+      ]
+    },
+    {
+      "participantId": "MH25000004",
+      "name": "Kavya Nair",
+      "email": "kavya.n@student.edu",
+      "phoneNumber": "+91-9876541007",
+      "college": "Vignan University",
+      "department": "English Literature",
+      "year": "1st",
+      "rollNumber": "24EN001",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentAmount": 100,
+      "paidAmount": 100,
+      "paymentDate": "2025-11-06T09:20:00.000Z",
+      "paymentMethod": "cash",
+      "paymentNotes": "Fresh participant, very enthusiastic",
+      "additionalInfo": "Published poet in college magazine"
+    },
+    {
+      "participantId": "MH25000005", 
+      "name": "Arjun Reddy",
+      "email": "arjun.r@student.edu",
+      "phoneNumber": "+91-9876541008",
+      "college": "Vignan University",
+      "department": "Fine Arts",
+      "year": "3rd",
+      "rollNumber": "20FA005",
+      "registrationStatus": "approved",
+      "paymentStatus": "pending",
+      "paymentAmount": 150,
+      "paidAmount": 0,
+      "paymentDate": null,
+      "paymentMethod": null,
+      "paymentNotes": "Registration approved, payment pending",
+      "additionalInfo": "Specializes in watercolor and digital art"
+    },
+    {
+      "participantId": "MH25000006",
+      "name": "Sneha Patel",
+      "email": "sneha.p@student.edu", 
+      "phoneNumber": "+91-9876541009",
+      "college": "Vignan University",
+      "department": "Music",
+      "year": "2nd",
+      "rollNumber": "22MU001",
+      "registrationStatus": "approved",
+      "paymentStatus": "paid",
+      "paymentAmount": 500,
+      "paidAmount": 500,
+      "paymentDate": "2025-11-05T11:30:00.000Z",
+      "paymentMethod": "card",
+      "paymentNotes": "Band lead vocalist payment",
+      "additionalInfo": "Lead vocalist with 3 years experience",
+      "teamMembers": [
+        {
+          "name": "Ravi Kumar",
+          "email": "ravi.k@student.edu",
+          "phoneNumber": "+91-9876541010",
+          "rollNumber": "22MU002"
+        },
+        {
+          "name": "Deepak Singh",
+          "email": "deepak.s@student.edu", 
+          "phoneNumber": "+91-9876541011",
+          "rollNumber": "22MU003"
+        }
+      ]
+    },
+    {
+      "participantId": "MH25000007",
+      "name": "Priyanka Sharma",
+      "email": "priyanka.s@student.edu",
+      "phoneNumber": "+91-9876541012",
+      "college": "Vignan University",
+      "department": "Computer Science",
+      "year": "2nd", 
+      "rollNumber": "22CS045",
+      "registrationStatus": "pending",
+      "paymentStatus": "pending",
+      "paymentAmount": 200,
+      "paidAmount": 0,
+      "paymentDate": null,
+      "paymentMethod": null,
+      "paymentNotes": "Registration under review",
+      "additionalInfo": "Trained in Kathak dance for 4 years"
+    },
+    {
+      "participantId": "MH25000008",
+      "name": "Aditya Gupta",
+      "email": "aditya.g@student.edu",
+      "phoneNumber": "+91-9876541013",
+      "college": "Vignan University", 
+      "department": "Information Technology",
+      "year": "3rd",
+      "rollNumber": "21IT089",
+      "registrationStatus": "approved",
+      "paymentStatus": "failed",
+      "paymentAmount": 300,
+      "paidAmount": 0,
+      "paymentDate": "2025-11-02T15:20:00.000Z",
+      "paymentMethod": "card",
+      "paymentNotes": "Card payment failed, needs to retry",
+      "additionalInfo": "Experienced in AI/ML development"
+    }
+  ]
+}
