@@ -1,0 +1,628 @@
+import React, { useState, useEffect } from 'react';
+import './TeamRegistrationNew.css';
+
+interface Event {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  eventDate: string;
+  venue: string;
+  maxParticipants: number;
+  currentParticipants: number;
+}
+
+interface PaymentVerification {
+  mhid: string;
+  name: string;
+  email: string;
+  phone: string;
+  paymentStatus: 'paid' | 'unpaid' | 'pending';
+  isPaid: boolean;
+}
+
+interface TeamMember {
+  mhid: string;
+  name: string;
+  email: string;
+  phone: string;
+  paymentStatus: string;
+}
+
+interface TeamRegistrationNewProps {
+  onTeamCreated?: () => void;
+}
+
+const TeamRegistrationNew: React.FC<TeamRegistrationNewProps> = ({ onTeamCreated }) => {
+  // State Management
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [categoryEvents, setCategoryEvents] = useState<Event[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [teamName, setTeamName] = useState('');
+  const [teamLeaderName, setTeamLeaderName] = useState('');
+  const [teamLeaderMhid, setTeamLeaderMhid] = useState('');
+  const [teamLeaderDetails, setTeamLeaderDetails] = useState<PaymentVerification | null>(null);
+  const [memberMhidInput, setMemberMhidInput] = useState('');
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [verifyingLeader, setVerifyingLeader] = useState(false);
+  const [verifyingMember, setVerifyingMember] = useState(false);
+  const [verifiedMember, setVerifiedMember] = useState<PaymentVerification | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  // Fetch events for selected category
+  const fetchCategoryEvents = async (category: string) => {
+    try {
+      setLoading(true);
+      setError('');
+      const token = localStorage.getItem('authToken');
+      
+      const response = await fetch(`/api/teams/events/category/${category}`, {
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch events');
+      }
+      
+      const data = await response.json();
+      setCategoryEvents(data);
+      
+      if (data.length === 0) {
+        setError(`No ${category} events available at the moment.`);
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to load events.');
+      console.error('Error fetching events:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyTeamLeader = async () => {
+    if (!teamLeaderMhid || teamLeaderMhid.length !== 10) {
+      setError('Please enter a valid MHID (10 characters: MHIDxxxxxx)');
+      return;
+    }
+
+    try {
+      setVerifyingLeader(true);
+      setError('');
+      const token = localStorage.getItem('authToken');
+      
+      const response = await fetch('/api/teams/verify-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ mhid: teamLeaderMhid.toUpperCase() })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Verification failed');
+      }
+
+      const data: PaymentVerification = await response.json();
+      setTeamLeaderDetails(data);
+      
+      if (!data.isPaid) {
+        setError(`Team leader payment status: ${data.paymentStatus}. Only paid participants can be team leader.`);
+      } else {
+        setTeamLeaderName(data.name);
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to verify team leader');
+      setTeamLeaderDetails(null);
+    } finally {
+      setVerifyingLeader(false);
+    }
+  };
+
+  const verifyMember = async () => {
+    if (!memberMhidInput || memberMhidInput.length !== 10) {
+      setError('Please enter a valid MHID (10 characters: MHIDxxxxxx)');
+      return;
+    }
+
+    // Check if already added
+    if (memberMhidInput.toUpperCase() === teamLeaderMhid.toUpperCase()) {
+      setError('Team leader is already added');
+      return;
+    }
+
+    if (teamMembers.some(m => m.mhid.toUpperCase() === memberMhidInput.toUpperCase())) {
+      setError('This participant is already added to the team');
+      return;
+    }
+
+    try {
+      setVerifyingMember(true);
+      setError('');
+      const token = localStorage.getItem('authToken');
+      
+      const response = await fetch('/api/teams/verify-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ mhid: memberMhidInput.toUpperCase() })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Verification failed');
+      }
+
+      const data: PaymentVerification = await response.json();
+      setVerifiedMember(data);
+      
+      if (!data.isPaid) {
+        setError(`Payment status: ${data.paymentStatus}. Only paid participants can join teams.`);
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to verify participant');
+      setVerifiedMember(null);
+    } finally {
+      setVerifyingMember(false);
+    }
+  };
+
+  const addMember = () => {
+    if (!verifiedMember || !verifiedMember.isPaid) {
+      setError('Please verify a paid participant first');
+      return;
+    }
+
+    if (selectedEvent && teamMembers.length >= selectedEvent.maxParticipants - 1) {
+      setError(`Maximum team size is ${selectedEvent.maxParticipants} (including leader)`);
+      return;
+    }
+
+    const newMember: TeamMember = {
+      mhid: verifiedMember.mhid,
+      name: verifiedMember.name,
+      email: verifiedMember.email,
+      phone: verifiedMember.phone,
+      paymentStatus: verifiedMember.paymentStatus
+    };
+
+    setTeamMembers([...teamMembers, newMember]);
+    setMemberMhidInput('');
+    setVerifiedMember(null);
+    setSuccess(`${newMember.name} added successfully!`);
+    setTimeout(() => setSuccess(''), 2000);
+  };
+
+  const removeMember = (mhid: string) => {
+    setTeamMembers(teamMembers.filter(m => m.mhid !== mhid));
+  };
+
+  const handleSubmitTeam = async () => {
+    if (!selectedEvent || !teamName || !teamLeaderDetails || !teamLeaderDetails.isPaid) {
+      setError('Please complete all required fields');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('authToken');
+
+      const teamData = {
+        teamName,
+        eventId: selectedEvent._id,
+        teamLeaderData: {
+          participantId: teamLeaderDetails.mhid,
+          name: teamLeaderDetails.name,
+          email: teamLeaderDetails.email,
+          phoneNumber: teamLeaderDetails.phone
+        },
+        teamMembers: teamMembers.map(member => ({
+          participantId: member.mhid,
+          name: member.name,
+          email: member.email,
+          phoneNumber: member.phone,
+          paymentStatus: member.paymentStatus
+        }))
+      };
+
+      const response = await fetch('/api/teams/create-team', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(teamData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create team');
+      }
+
+      const result = await response.json();
+      setSuccess(`Team registered successfully! 🎉 Team ID: ${result.team.teamId || result.team._id}`);
+      
+      if (onTeamCreated) {
+        onTeamCreated();
+      }
+      
+      setTimeout(() => {
+        setCurrentStep(1);
+        setSelectedCategory('');
+        setSelectedEvent(null);
+        setTeamName('');
+        setTeamLeaderName('');
+        setTeamLeaderMhid('');
+        setTeamLeaderDetails(null);
+        setTeamMembers([]);
+        setSuccess('');
+      }, 3000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to register team');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCategoryBadgeClass = (category: string) => {
+    // Handle both 'culturals' and 'cultural' formats
+    if (category === 'culturals' || category === 'cultural') {
+      return 'event-category-badge cultural';
+    }
+    return `event-category-badge ${category.toLowerCase()}`;
+  };
+
+  const getPaymentStatusIcon = (status: string) => {
+    switch (status) {
+      case 'paid':
+        return '✓';
+      case 'unpaid':
+        return '✗';
+      case 'pending':
+        return '⏳';
+      default:
+        return '?';
+    }
+  };
+
+  return (
+    <div className="team-registration-container">
+      <div className="team-registration-wrapper">
+        {/* Header */}
+        <div className="team-registration-header">
+          <h1>🎭 Team Registration 🎭</h1>
+          <p>Join the National Mahotsav - Register Your Team</p>
+        </div>
+
+        {/* Progress Indicator */}
+        <div className="progress-indicator">
+          <div className="progress-step">
+            <div className={`progress-circle ${currentStep >= 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}>
+              {currentStep > 1 ? '✓' : '1'}
+            </div>
+            <span className={`progress-label ${currentStep === 1 ? 'active' : ''}`}>Select Event</span>
+          </div>
+          <span className="progress-arrow">→</span>
+          <div className="progress-step">
+            <div className={`progress-circle ${currentStep >= 2 ? 'active' : ''} ${currentStep > 2 ? 'completed' : ''}`}>
+              {currentStep > 2 ? '✓' : '2'}
+            </div>
+            <span className={`progress-label ${currentStep === 2 ? 'active' : ''}`}>Team Details</span>
+          </div>
+          <span className="progress-arrow">→</span>
+          <div className="progress-step">
+            <div className={`progress-circle ${currentStep >= 3 ? 'active' : ''}`}>3</div>
+            <span className={`progress-label ${currentStep === 3 ? 'active' : ''}`}>Add Members</span>
+          </div>
+        </div>
+
+        {/* Alerts */}
+        {error && (
+          <div className="alert error">
+            <span className="status-icon">⚠️</span>
+            <div style={{ flex: 1 }}>{error}</div>
+            {currentStep === 1 && (
+              <button 
+                onClick={fetchSortedEvents}
+                style={{
+                  background: 'white',
+                  color: '#721c24',
+                  border: '1px solid #721c24',
+                  padding: '8px 16px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  marginLeft: '10px'
+                }}
+              >
+                Retry
+              </button>
+            )}
+          </div>
+        )}
+        {success && (
+          <div className="alert success">
+            <span className="status-icon">✓</span>
+            {success}
+          </div>
+        )}
+
+        {/* Main Card */}
+        <div className="team-registration-card">
+          {/* Step 1: Event Selection */}
+          {currentStep === 1 && (
+            <div className="registration-step">
+              <div className="step-header">
+                <div className="step-number">1</div>
+                <div className="step-title">
+                  <h2>Select Event</h2>
+                  <p>Choose an event for your team (Cultural & Sports events shown first)</p>
+                </div>
+              </div>
+
+              {loading ? (
+                <div style={{ textAlign: 'center', padding: '40px' }}>
+                  <div className="loading-spinner" style={{ 
+                    width: '50px', 
+                    height: '50px', 
+                    borderWidth: '5px',
+                    margin: '0 auto'
+                  }}></div>
+                  <p style={{ marginTop: '20px', color: '#666' }}>Loading events...</p>
+                </div>
+              ) : (
+                <div className="event-grid">
+                  {events.map(event => (
+                    <div
+                      key={event._id}
+                      className={`event-card ${selectedEvent?._id === event._id ? 'selected' : ''}`}
+                      onClick={() => setSelectedEvent(event)}
+                    >
+                      <div className={getCategoryBadgeClass(event.category)}>
+                        {event.category}
+                      </div>
+                      <h3>{event.title}</h3>
+                      <p>{event.description}</p>
+                      <div className="event-meta">
+                        <div className="event-meta-item">
+                          <span>📍</span> {event.venue}
+                        </div>
+                        <div className="event-meta-item">
+                          <span>👥</span> <strong>{event.currentParticipants}</strong>/{event.maxParticipants}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="navigation-buttons">
+                <button
+                  className="nav-btn next-btn"
+                  onClick={() => setCurrentStep(2)}
+                  disabled={!selectedEvent}
+                >
+                  Next: Team Details →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Team Details */}
+          {currentStep === 2 && (
+            <div className="registration-step">
+              <div className="step-header">
+                <div className="step-number">2</div>
+                <div className="step-title">
+                  <h2>Team Details</h2>
+                  <p>Enter your team name and details</p>
+                </div>
+              </div>
+
+              {selectedEvent && (
+                <div className="alert info">
+                  <span>📌</span>
+                  <div>
+                    <strong>Selected Event:</strong> {selectedEvent.title}
+                    <br />
+                    <strong>Max Team Size:</strong> {selectedEvent.maxParticipants} participants
+                  </div>
+                </div>
+              )}
+
+              <div className="team-form">
+                <div className="form-group">
+                  <label>Team Name *</label>
+                  <input
+                    type="text"
+                    value={teamName}
+                    onChange={(e) => setTeamName(e.target.value)}
+                    placeholder="Enter a unique team name"
+                    maxLength={50}
+                  />
+                </div>
+              </div>
+
+              <div className="navigation-buttons">
+                <button
+                  className="nav-btn back-btn"
+                  onClick={() => setCurrentStep(1)}
+                >
+                  ← Back
+                </button>
+                <button
+                  className="nav-btn next-btn"
+                  onClick={() => setCurrentStep(3)}
+                  disabled={!teamName.trim()}
+                >
+                  Next: Add Members →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Add Members */}
+          {currentStep === 3 && (
+            <div className="registration-step">
+              <div className="step-header">
+                <div className="step-number">3</div>
+                <div className="step-title">
+                  <h2>Add Team Members</h2>
+                  <p>Enter MHID to verify and add participants (first member becomes team leader)</p>
+                </div>
+              </div>
+
+              {selectedEvent && (
+                <div className="alert info">
+                  <span>ℹ️</span>
+                  <div>
+                    <strong>Team:</strong> {teamName} | <strong>Event:</strong> {selectedEvent.title}
+                    <br />
+                    <strong>Members Added:</strong> {teamMembers.length} / {selectedEvent.maxParticipants}
+                  </div>
+                </div>
+              )}
+
+              {/* Add Member Section */}
+              <div className="member-input-section">
+                <div className="form-group">
+                  <label>Participant MHID *</label>
+                  <div className="mhid-input-group">
+                    <input
+                      type="text"
+                      className="mhid-input"
+                      value={mhidInput}
+                      onChange={(e) => {
+                        const value = e.target.value.toUpperCase();
+                        if (value.length <= 10) {
+                          setMhidInput(value);
+                        }
+                      }}
+                      placeholder="Enter MHID (e.g., MHID123456)"
+                      maxLength={10}
+                    />
+                    {verifying && (
+                      <button className="verify-btn" disabled>
+                        <span className="loading-spinner"></span>
+                      </button>
+                    )}
+                  </div>
+                  <small style={{ color: '#666', fontSize: '0.85rem', marginTop: '5px', display: 'block' }}>
+                    Format: MHIDxxxxxx (10 characters) - Payment status will be verified automatically
+                  </small>
+                </div>
+
+                {/* Payment Status Display */}
+                {verifiedParticipant && (
+                  <div className="participant-preview">
+                    <div className={`payment-status-indicator ${verifiedParticipant.paymentStatus}`}>
+                      <span className="status-icon">{getPaymentStatusIcon(verifiedParticipant.paymentStatus)}</span>
+                      Payment Status: <strong>{verifiedParticipant.paymentStatus.toUpperCase()}</strong>
+                    </div>
+                    <h4>{verifiedParticipant.name}</h4>
+                    <p>📧 {verifiedParticipant.email}</p>
+                    <p>📱 {verifiedParticipant.phone}</p>
+                    <p>🆔 {verifiedParticipant.mhid}</p>
+                    
+                    <button
+                      className="add-member-btn"
+                      onClick={addMemberToTeam}
+                      disabled={!verifiedParticipant.isPaid || (!!selectedEvent && teamMembers.length >= selectedEvent.maxParticipants)}
+                    >
+                      {verifiedParticipant.isPaid ? 
+                        `Add ${teamMembers.length === 0 ? 'as Team Leader' : 'to Team'}` : 
+                        'Payment Required'
+                      }
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Members List */}
+              {teamMembers.length > 0 && (
+                <div className="members-list">
+                  <h3>
+                    Team Members 
+                    <span className="member-count-badge">{teamMembers.length}</span>
+                  </h3>
+                  {teamMembers.map((member, index) => (
+                    <div key={member.mhid} className="member-item">
+                      <div className="member-info">
+                        <h4>
+                          {member.name} 
+                          {member.isLeader && <span style={{ 
+                            marginLeft: '10px', 
+                            background: 'var(--mahotsav-gold)', 
+                            padding: '3px 10px', 
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
+                            fontWeight: 'bold'
+                          }}>👑 LEADER</span>}
+                        </h4>
+                        <p>📧 {member.email}</p>
+                        <p>📱 {member.phone} | 🆔 {member.mhid}</p>
+                        <div className={`payment-status-indicator ${member.paymentStatus}`} style={{ 
+                          display: 'inline-flex',
+                          marginTop: '8px',
+                          padding: '5px 12px',
+                          fontSize: '0.8rem'
+                        }}>
+                          <span className="status-icon">{getPaymentStatusIcon(member.paymentStatus)}</span>
+                          {member.paymentStatus.toUpperCase()}
+                        </div>
+                      </div>
+                      <div className="member-actions">
+                        {!member.isLeader && (
+                          <button
+                            className="remove-member-btn"
+                            onClick={() => removeMember(member.mhid)}
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Navigation */}
+              <div className="navigation-buttons">
+                <button
+                  className="nav-btn back-btn"
+                  onClick={() => setCurrentStep(2)}
+                >
+                  ← Back
+                </button>
+                <button
+                  className="nav-btn submit-btn"
+                  onClick={handleSubmitTeam}
+                  disabled={teamMembers.length === 0 || loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="loading-spinner"></span> Submitting...
+                    </>
+                  ) : (
+                    'Submit Team Registration 🎉'
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TeamRegistrationNew;

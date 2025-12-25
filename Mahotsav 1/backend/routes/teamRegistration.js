@@ -2,8 +2,23 @@ const express = require('express');
 const TeamRegistration = require('../models/TeamRegistration');
 const Event = require('../models/Event');
 const Participant = require('../models/Participant');
+const Registration = require('../models/Registration');
 const auth = require('../middleware/auth');
 const router = express.Router();
+
+// In-memory cache for payment status (vector search optimization)
+const paymentStatusCache = new Map();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+// Clear expired cache entries periodically
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, value] of paymentStatusCache.entries()) {
+    if (now - value.timestamp > CACHE_TTL) {
+      paymentStatusCache.delete(key);
+    }
+  }
+}, 60 * 1000); // Run every minute
 
 // Create a new team for an event
 router.post('/create-team', auth, async (req, res) => {
@@ -13,7 +28,9 @@ router.post('/create-team', auth, async (req, res) => {
       user: req.user?._id
     });
     
-    const { teamName, eventId, teamLeaderData, teamMembers = [] } = req.body;
+    const { teamName, eventId, eventName, teamLeaderData, teamMembers = [] } = req.body;
+    
+    console.log('📝 Event name from frontend:', eventName);
     
     // Validate required fields
     if (!teamName || !eventId || !teamLeaderData) {
@@ -21,13 +38,22 @@ router.post('/create-team', auth, async (req, res) => {
     }
     
     // Check if event exists
-    const event = await Event.findById(eventId);
+    const event = await Event.findById(eventId)
+      .select('eventName eventType category venue date maxParticipants registeredCount isActive');
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
+
+    console.log('Event found:', { 
+      eventName: event.eventName,
+      eventType: event.eventType,
+      category: event.category,
+      venue: event.venue,
+      maxParticipants: event.maxParticipants
+    });
     
-    // Check if event is published and active
-    if (event.status !== 'published' && event.status !== 'ongoing') {
+    // Check if event is active
+    if (event.isActive === false) {
       return res.status(400).json({ error: 'Event is not available for registration' });
     }
     
@@ -41,7 +67,7 @@ router.post('/create-team', auth, async (req, res) => {
       return res.status(400).json({ error: 'Team name already exists for this event' });
     }
     
-    // Check if team leader is already in a team for this event
+    // Check if team leader or members are already in a team for this event
     const participantIds = [teamLeaderData.participantId, ...teamMembers.map(member => member.participantId)];
     
     const existingTeams = await TeamRegistration.find({
@@ -53,23 +79,79 @@ router.post('/create-team', auth, async (req, res) => {
     });
     
     if (existingTeams.length > 0) {
-      const conflictingParticipant = existingTeams[0].teamLeader.participantId;
-      return res.status(400).json({ error: `Participant ${conflictingParticipant} is already part of a team for this event` });
+      // Find which participant from the current request is already in a team
+      console.log('Existing teams found:', existingTeams.map(t => ({
+        teamName: t.teamName,
+        leader: t.teamLeader.participantId,
+        members: t.teamMembers.map(m => m.participantId)
+      })));
+      console.log('Current participants trying to register:', participantIds);
+      
+      let conflictingParticipant = null;
+      for (const team of existingTeams) {
+        if (participantIds.includes(team.teamLeader.participantId)) {
+          conflictingParticipant = team.teamLeader.participantId;
+          console.log('Found conflict in leader:', conflictingParticipant);
+          break;
+        }
+        for (const member of team.teamMembers) {
+          if (participantIds.includes(member.participantId)) {
+            conflictingParticipant = member.participantId;
+            console.log('Found conflict in member:', conflictingParticipant);
+            break;
+          }
+        }
+        if (conflictingParticipant) break;
+      }
+      
+      return res.status(400).json({ 
+        error: `Participant ${conflictingParticipant} is already part of a team for this event (Team: ${existingTeams[0].teamName})` 
+      });
     }
+    
+    // Generate Team ID (TM000001, TM000002, etc.)
+    const lastTeam = await TeamRegistration.findOne({}, { teamId: 1 })
+      .sort({ createdAt: -1 })
+      .limit(1);
+    
+    let teamNumber = 1;
+    if (lastTeam && lastTeam.teamId && lastTeam.teamId.startsWith('TM')) {
+      const lastNumber = parseInt(lastTeam.teamId.substring(2));
+      if (!isNaN(lastNumber)) {
+        teamNumber = lastNumber + 1;
+      }
+    }
+    
+    const teamId = `TM${String(teamNumber).padStart(6, '0')}`;
+    
+    // Use event name from frontend (already formatted correctly)
+    const eventNameToUse = eventName || event.eventName || 'Unknown Event';
+    console.log('✅ Using event name:', eventNameToUse);
     
     // Create new team registration
     const teamRegistration = new TeamRegistration({
+      teamId,
       teamName,
       eventId,
-      eventName: event.title, // Use title instead of name
+      eventName: eventNameToUse,
       teamLeader: teamLeaderData,
-      teamMembers: teamMembers, // Add team members
-      maxTeamSize: 10, // Default team size
+      teamMembers: teamMembers,
+      maxTeamSize: event.maxParticipants || 10,
       status: 'forming',
       totalAmount: 500 * (1 + teamMembers.length) // Default registration fee per person * team size
     });
     
     await teamRegistration.save();
+    
+    console.log(`Team created successfully with ID: ${teamId}`);
+    console.log('Saved team details:', {
+      teamId: teamRegistration.teamId,
+      teamName: teamRegistration.teamName,
+      eventName: teamRegistration.eventName,
+      leader: teamRegistration.teamLeader.participantId,
+      members: teamRegistration.teamMembers.map(m => m.participantId),
+      savedAt: new Date().toISOString()
+    });
     
     res.status(201).json({
       message: 'Team created successfully',
@@ -284,6 +366,146 @@ router.get('/event/:eventId/teams', auth, async (req, res) => {
   } catch (error) {
     console.error('Error fetching teams:', error);
     res.status(500).json({ error: 'Failed to fetch teams' });
+  }
+});
+
+// Get events by category (with caching for vector search optimization)
+router.get('/events/category/:category', async (req, res) => {
+  try {
+    const { category } = req.params;
+    console.log(`Fetching ${category} events`);
+
+    // Find events matching the category (using eventType field)
+    const events = await Event.find({
+      eventType: { $regex: new RegExp(`^${category}`, 'i') }, // Case-insensitive match for 'culturals', 'sports', 'para'
+      isActive: true
+    })
+      .select('_id eventName description eventType category venue date time maxParticipants registeredCount isActive')
+      .lean();
+
+    console.log(`Found ${events.length} ${category} events`);
+    
+    if (events.length > 0) {
+      console.log('Sample event:', events[0]);
+    }
+
+    // Map to frontend expected format
+    const formattedEvents = events.map(event => ({
+      _id: event._id,
+      title: event.eventName,
+      description: event.description,
+      category: event.eventType,
+      eventDate: event.date,
+      venue: event.venue,
+      maxParticipants: event.maxParticipants,
+      currentParticipants: event.registeredCount || 0
+    }));
+
+    console.log(`Returning ${formattedEvents.length} formatted events`);
+    res.json(formattedEvents);
+  } catch (error) {
+    console.error(`Error fetching ${req.params.category} events:`, error);
+    res.status(500).json({ error: 'Failed to fetch events', details: error.message });
+  }
+});
+
+// Get events sorted by category (Cultural and Sports first)
+router.get('/events/sorted', async (req, res) => {
+  try {
+    // Find all events without filtering by isActive first to debug
+    const events = await Event.find({})
+      .select('_id eventName description category eventType venue maxParticipants registeredCount date time isActive')
+      .lean();
+
+    console.log('Total events found:', events.length);
+    console.log('Sample event:', events[0]);
+
+    // Filter active events
+    const activeEvents = events.filter(e => e.isActive !== false);
+    
+    console.log('Active events:', activeEvents.length);
+
+    // Sort events: culturals first, then sports, then others
+    const sortedEvents = activeEvents.sort((a, b) => {
+      const categoryOrder = { 'culturals': 1, 'sports': 2 };
+      const orderA = categoryOrder[a.eventType] || 999;
+      const orderB = categoryOrder[b.eventType] || 999;
+      
+      if (orderA !== orderB) return orderA - orderB;
+      return (a.eventName || '').localeCompare(b.eventName || '');
+    });
+
+    // Map to frontend expected format
+    const formattedEvents = sortedEvents.map(event => ({
+      _id: event._id,
+      title: event.eventName,
+      description: event.description,
+      category: event.eventType,
+      eventDate: event.date,
+      venue: event.venue,
+      maxParticipants: event.maxParticipants,
+      currentParticipants: event.registeredCount || 0
+    }));
+
+    console.log('Formatted events to send:', formattedEvents.length);
+    res.json(formattedEvents);
+  } catch (error) {
+    console.error('Error fetching sorted events:', error);
+    res.status(500).json({ error: 'Failed to fetch events', details: error.message });
+  }
+});
+
+// Verify payment status by MHID (optimized for quick lookup)
+router.post('/verify-payment', async (req, res) => {
+  try {
+    const { mhid } = req.body;
+
+    if (!mhid || !mhid.match(/^MH\d{8}$/i)) {
+      return res.status(400).json({ 
+        error: 'Invalid MHID format. Expected format: MH26000001' 
+      });
+    }
+
+    // Check cache first
+    const cacheKey = mhid.toUpperCase();
+    const cached = paymentStatusCache.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp < CACHE_TTL)) {
+      return res.json(cached.data);
+    }
+
+    // Query only necessary fields for performance
+    const registration = await Registration.findOne({ 
+      userId: mhid.toUpperCase() 
+    })
+    .select('paymentStatus name email phone userId')
+    .lean();
+
+    if (!registration) {
+      return res.status(404).json({ 
+        error: 'Participant not found',
+        mhid 
+      });
+    }
+
+    const result = {
+      mhid: registration.userId,
+      name: registration.name,
+      email: registration.email,
+      phone: registration.phone,
+      paymentStatus: registration.paymentStatus || 'unpaid',
+      isPaid: registration.paymentStatus === 'paid'
+    };
+
+    // Cache the result
+    paymentStatusCache.set(cacheKey, {
+      data: result,
+      timestamp: Date.now()
+    });
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error verifying payment:', error);
+    res.status(500).json({ error: 'Failed to verify payment status' });
   }
 });
 

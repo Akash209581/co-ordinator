@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import CoordinatorDashboard from './components/CoordinatorDashboard';
+import TeamRegistrationNew from './components/TeamRegistrationNew';
 import './App.css';
 
 // Protected Route Component
@@ -20,8 +21,16 @@ function App() {
           <Route 
             path="/dashboard" 
             element={
+            
+            <CoordinatorDashboard />
+              
+            } 
+          />
+          <Route 
+            path="/team-registration" 
+            element={
               <ProtectedRoute>
-                <CoordinatorDashboard />
+                <TeamRegistrationNew />
               </ProtectedRoute>
             } 
           />

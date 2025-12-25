@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const teamRegistrationSchema = new mongoose.Schema({
+  teamId: {
+    type: String,
+    unique: true,
+    sparse: true // Allow null for old records
+  },
   teamName: {
     type: String,
     required: true,
@@ -17,8 +22,7 @@ const teamRegistrationSchema = new mongoose.Schema({
   },
   teamLeader: {
     participantId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Participant',
+      type: String,
       required: true
     },
     name: {
@@ -36,8 +40,7 @@ const teamRegistrationSchema = new mongoose.Schema({
   },
   teamMembers: [{
     participantId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Participant',
+      type: String,
       required: true
     },
     name: {

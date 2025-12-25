@@ -90,4 +90,4 @@ eventSchema.index({ eventDate: 1, status: 1 });
 eventSchema.index({ category: 1, status: 1 });
 eventSchema.index({ coordinatorId: 1 });
 
-module.exports = mongoose.model('Event', eventSchema, 'test.events');
+module.exports = mongoose.model('Event', eventSchema, 'events');

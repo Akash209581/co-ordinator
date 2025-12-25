@@ -65,7 +65,7 @@ app.use('/api/coordinator', coordinatorRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/participants', participantsRoutes);
 app.use('/api/registrations', registrationsRoutes);
-app.use('/api/team-registration', teamRegistrationRoutes);
+app.use('/api/teams', teamRegistrationRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
