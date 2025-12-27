@@ -1,21 +1,4 @@
-/* Mahotsav Theme - Inspired by Eternal Harmony */
-:root {
-  /* Primary purple gradient from Mahotsav theme */
-  --mahotsav-purple-deep: #4a2c5e;
-  --mahotsav-purple-mid: #6b3d7c;
-  --mahotsav-purple-light: #8b5a9e;
-  --mahotsav-pink: #d896c9;
-  --mahotsav-pink-light: #e5b3d8;
-  --mahotsav-lotus-pink: #c77db5;
-  --mahotsav-gold: #f4d03f;
-  --mahotsav-white: #fffdf9;
-  
-  /* Gradient backgrounds */
-  --mahotsav-gradient: linear-gradient(135deg, #6b3d7c 0%, #8b5a9e 50%, #c77db5 100%);
-  --mahotsav-gradient-reverse: linear-gradient(135deg, #c77db5 0%, #8b5a9e 50%, #6b3d7c 100%);
-  --mahotsav-card-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 253, 249, 0.98) 100%);
-}
-
+/* Mahotsav Theme - Professional Login Integration */
 .login-container {
   min-height: 100vh;
   display: flex;
@@ -25,6 +8,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
   overflow: hidden;
+  background: transparent;
 }
 
 /* Video background */

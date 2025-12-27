@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TeamRegistrationNew from './TeamRegistrationNew';
 import './CoordinatorDashboard.css';
@@ -113,6 +113,7 @@ const CoordinatorDashboard: React.FC = () => {
   const [editingAmount, setEditingAmount] = useState<string | null>(null);
   const [editedAmounts, setEditedAmounts] = useState<{[key: string]: number}>({});
   const [participantTypes, setParticipantTypes] = useState<{[key: string]: string}>({});
+  const [paidParticipantsCount, setPaidParticipantsCount] = useState<number>(0);
   
   // Team registration states
   const [teamRegistrations, setTeamRegistrations] = useState<any[]>([]);
@@ -120,7 +121,22 @@ const CoordinatorDashboard: React.FC = () => {
   const [teamSearchQuery, setTeamSearchQuery] = useState<string>('');
   const [showTeamCreation, setShowTeamCreation] = useState<boolean>(false);
   
+  // Toast notification state
+  const [toast, setToast] = useState<{show: boolean; message: string; type: 'success' | 'error'}>({
+    show: false,
+    message: '',
+    type: 'success'
+  });
+  
   const navigate = useNavigate();
+
+  // Toast notification helper
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast({ show: false, message: '', type: 'success' });
+    }, 3000);
+  };
 
   // Helper function to get the ID (prefer userId over participantId)
   const getParticipantId = (participant: Participant): string => {
@@ -190,6 +206,39 @@ const CoordinatorDashboard: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // ============ DASHBOARD SYNCHRONIZATION EFFECT ============
+  // Ensures Dashboard "Total Proceedings" stays in sync with payment state changes
+  useEffect(() => {
+    // Derive Dashboard values from payment states (single source of truth)
+    const derivedPaymentCount = totalPaymentsProcessed;
+    const derivedTotalAmount = totalAmountCollected;
+    
+    // Update stats if values have changed to keep Dashboard synchronized
+    setStats(prev => {
+      const needsUpdate = 
+        (prev.totalPayments !== derivedPaymentCount) ||
+        (prev.totalAmount !== derivedTotalAmount);
+      
+      if (needsUpdate) {
+        return {
+          ...prev,
+          totalPayments: derivedPaymentCount,
+          totalAmount: derivedTotalAmount,
+          paidCount: derivedPaymentCount
+        };
+      }
+      return prev;
+    });
+  }, [totalPaymentsProcessed, totalAmountCollected]);
+
+  // ============ PROCEED TO PAY COUNTER SYNCHRONIZATION ============
+  // Derives the paid participants count from actual data (single source of truth)
+  useEffect(() => {
+    const mergedData = [...unpaidParticipants, ...paymentHistory];
+    const paidCount = mergedData.filter(p => p.paymentStatus === 'paid').length;
+    setPaidParticipantsCount(paidCount);
+  }, [unpaidParticipants, paymentHistory]);
 
   const fetchDashboardData = async () => {
     try {
@@ -510,18 +559,35 @@ const CoordinatorDashboard: React.FC = () => {
     try {
       const token = localStorage.getItem('authToken');
       
+      // ============ STEP 1: FIND PARTICIPANT & VALIDATE ============
+      const mergedData = [...unpaidParticipants, ...paymentHistory];
+      const participant = mergedData.find(p => getParticipantId(p) === participantId);
+      
+      if (!participant) {
+        showToast('Participant not found', 'error');
+        setMarkingPaid(null);
+        return;
+      }
+      
+      // CRITICAL: Use Number() to ensure numeric type and prevent string concatenation
+      const amountToPay = Number(customAmount !== undefined ? customAmount : (participant.remainingAmount || participant.paymentAmount || 0));
+      
+      if (isNaN(amountToPay) || amountToPay <= 0) {
+        showToast('Invalid payment amount', 'error');
+        setMarkingPaid(null);
+        return;
+      }
+      
       const requestBody: any = {
         paymentMethod,
-        paymentNotes: 'Marked as paid from unpaid participants list'
+        paymentNotes: 'Marked as paid from proceed to pay list'
       };
       
-      // Add custom amount if provided (include even if 0)
       if (customAmount !== undefined) {
         requestBody.amount = customAmount;
       }
       
-      console.log('Marking as paid with data:', requestBody); // Debug log
-      
+      // ============ STEP 2: API CALL ============
       const response = await fetch(`http://localhost:5000/api/coordinator/registrations/mark-paid/${participantId}`, {
         method: 'POST',
         headers: {
@@ -534,24 +600,84 @@ const CoordinatorDashboard: React.FC = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message || 'Error marking as paid');
+        showToast(data.message || 'Error marking as paid', 'error');
+        setMarkingPaid(null);
         return;
       }
 
-      alert(`${data.participant.name} marked as paid successfully!`);
+      // ============ STEP 3: ATOMIC STATE SYNCHRONIZATION ============
+      const currentTimestamp = new Date().toISOString();
+      const updatedParticipant = {
+        ...participant,
+        paymentStatus: 'paid',
+        paidAmount: amountToPay,
+        paymentMethod,
+        paymentDate: currentTimestamp,
+        remainingAmount: 0 // Ensure remaining amount is zero for paid users
+      };
       
-      // Refresh unpaid participants list
-      await fetchUnpaidParticipants().catch(err => console.error('Error refreshing unpaid list:', err));
+      // 3.1 Update unpaidParticipants - Mark as paid (change status)
+      setUnpaidParticipants(prev => 
+        prev.map(p => 
+          getParticipantId(p) === participantId 
+            ? updatedParticipant
+            : p
+        )
+      );
       
-      // Refresh dashboard stats
-      await fetchDashboardData().catch(err => console.error('Error refreshing dashboard:', err));
+      // 3.2 Update paymentHistory - Ensure participant appears in paid list
+      setPaymentHistory(prev => {
+        const existingIndex = prev.findIndex(p => getParticipantId(p) === participantId);
+        if (existingIndex >= 0) {
+          // Update existing entry
+          const updated = [...prev];
+          updated[existingIndex] = updatedParticipant;
+          return updated;
+        } else {
+          // Add to payment history (so it appears in default "paid only" view)
+          return [updatedParticipant, ...prev];
+        }
+      });
       
-      // Refresh payment history
-      await fetchPaymentHistory().catch(err => console.error('Error refreshing payment history:', err));
+      // 3.3 Update Dashboard Statistics - Atomic functional updates
+      setTotalPaymentsProcessed(prev => Number(prev) + 1);
+      setTotalAmountCollected(prev => Number(prev) + Number(amountToPay));
+      
+      // 3.4 Update payment method specific totals
+      if (paymentMethod === 'cash') {
+        setCashAmount(prev => Number(prev) + Number(amountToPay));
+      } else if (paymentMethod === 'upi') {
+        setUpiAmount(prev => Number(prev) + Number(amountToPay));
+      }
+      
+      // 3.5 Update global stats (for Dashboard Total Proceedings synchronization)
+      setStats(prev => ({
+        ...prev,
+        paidCount: Number(prev.paidCount || 0) + 1,
+        totalAmount: Number(prev.totalAmount || 0) + Number(amountToPay),
+        totalPayments: Number(prev.totalPayments || 0) + 1
+      }));
+      
+      // 3.6 Update Proceed to Pay section counter (Real-time synchronization)
+      setPaidParticipantsCount(prev => Number(prev) + 1);
+      
+      // ============ STEP 4: UI FEEDBACK ============
+      showToast(
+        `✓ ${data.participant.name} marked as paid! Dashboard totals updated successfully. (₹${amountToPay.toLocaleString('en-IN')})`,
+        'success'
+      );
+      
+      // ============ STEP 5: BACKGROUND SYNC ============
+      // Refresh data in background for server-side consistency (non-blocking)
+      setTimeout(() => {
+        fetchUnpaidParticipants().catch(err => console.error('Background sync error:', err));
+        fetchDashboardData().catch(err => console.error('Background sync error:', err));
+        fetchPaymentHistory().catch(err => console.error('Background sync error:', err));
+      }, 1000);
 
     } catch (error) {
       console.error('Error marking as paid:', error);
-      alert('Network error while marking as paid');
+      showToast('Network error while marking as paid', 'error');
     } finally {
       setMarkingPaid(null);
     }
@@ -692,6 +818,29 @@ const CoordinatorDashboard: React.FC = () => {
     navigate('/login');
   };
 
+  // Memoized filtering logic for Proceed to Pay: merge datasets and apply conditional display rules
+  const filteredProceedToPayParticipants = useMemo(() => {
+    const mergedData = [...unpaidParticipants, ...paymentHistory];
+    
+    // DEFAULT VIEW: Show only paid users
+    if (!unpaidSearchQuery || unpaidSearchQuery.trim() === '') {
+      return mergedData.filter(p => p.paymentStatus === 'paid');
+    }
+    
+    // SEARCH VIEW: Show both paid and unpaid matching search criteria
+    const query = unpaidSearchQuery.toLowerCase().trim();
+    return mergedData.filter(participant => {
+      const participantId = getParticipantId(participant);
+      return (
+        (participantId || '').toLowerCase().includes(query) ||
+        (participant.name || '').toLowerCase().includes(query) ||
+        (participant.event || '').toLowerCase().includes(query) ||
+        (participant.phoneNumber || '').includes(query) ||
+        (participant.department || '').toLowerCase().includes(query)
+      );
+    });
+  }, [unpaidParticipants, paymentHistory, unpaidSearchQuery]);
+
   if (isLoading) {
     return (
       <div className="dashboard-container">
@@ -732,12 +881,6 @@ const CoordinatorDashboard: React.FC = () => {
             onClick={() => setActiveTab('search')}
           >
             🔍 Payment Search
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'payments' ? 'active' : ''}`}
-            onClick={() => setActiveTab('payments')}
-          >
-            💰 Payment History
           </button>
           <button 
             className={`nav-tab ${activeTab === 'unpaid' ? 'active' : ''}`}
@@ -1103,169 +1246,10 @@ const CoordinatorDashboard: React.FC = () => {
           </section>
         )}
 
-        {/* Payment History Tab */}
-        {activeTab === 'payments' && (
-          <section className="payment-history-section">
-            <div className="section-header">
-              <div>
-                <h2>💰 Payment History</h2>
-                <p>Payments processed by you</p>
-              </div>
-              <button 
-                onClick={fetchPaymentHistory}
-                className="refresh-btn"
-                disabled={isLoading}
-              >
-                🔄 Refresh
-              </button>
-            </div>
-            
-            {paymentHistory.length > 0 ? (
-              <div className="payment-history-list">
-                <div className="payment-history-header">
-                  <span>User ID</span>
-                  <span>Name</span>
-                  <span>Event</span>
-                  <span>Amount</span>
-                  <span>Method</span>
-                  <span>Date</span>
-                  <span>Status</span>
-                  <span>Processed By</span>
-                  <span>Actions</span>
-                </div>
-                {paymentHistory.map((payment, index) => {
-                  const paymentId = getParticipantId(payment);
-                  return (
-                  <div key={index} className="payment-history-row">
-                    {editingPayment === paymentId ? (
-                      <>
-                        <span className="participant-id">{paymentId}</span>
-                        <span>{payment.name}</span>
-                        <span className="event-name">{payment.event}</span>
-                        <span className="amount">
-                          <input
-                            type="number"
-                            value={editData.paidAmount}
-                            onChange={(e) => setEditData(prev => ({...prev, paidAmount: e.target.value}))}
-                            className="edit-input small"
-                            min="0"
-                            step="0.01"
-                            placeholder="Amount"
-                          />
-                        </span>
-                        <span className="method">
-                          <select
-                            value={editData.paymentMethod}
-                            onChange={(e) => setEditData(prev => ({...prev, paymentMethod: e.target.value}))}
-                            className="edit-select"
-                          >
-                            <option value="cash">Cash</option>
-                            <option value="upi">UPI</option>
-                          </select>
-                        </span>
-                        <span className="date">
-                          {payment.paymentDate ? new Date(payment.paymentDate).toLocaleDateString() : '-'}
-                        </span>
-                        <span className="status">
-                          <select
-                            value={editData.paymentStatus}
-                            onChange={(e) => setEditData(prev => ({...prev, paymentStatus: e.target.value}))}
-                            className="edit-select"
-                          >
-                            <option value="pending">Pending</option>
-                            <option value="paid">Paid</option>
-                            <option value="failed">Failed</option>
-                            <option value="refunded">Refunded</option>
-                          </select>
-                        </span>
-                        <span className="processed-by">
-                          {payment.processedBy?.name || payment.processedBy?.username || '-'}
-                        </span>
-                        <span className="actions">
-                          <button
-                            onClick={() => updatePayment(paymentId)}
-                            disabled={updatingPayment}
-                            className="btn-save"
-                          >
-                            {updatingPayment ? '⏳' : '✅'}
-                          </button>
-                          <button
-                            onClick={cancelEditPayment}
-                            className="btn-cancel"
-                          >
-                            ❌
-                          </button>
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="participant-id">{paymentId}</span>
-                        <span>{payment.name}</span>
-                        <span className="event-name">{payment.event}</span>
-                        <span className="amount">₹{payment.paidAmount?.toLocaleString('en-IN')}</span>
-                        <span className="method">{payment.paymentMethod}</span>
-                        <span className="date">
-                          {payment.paymentDate ? new Date(payment.paymentDate).toLocaleDateString() : '-'}
-                        </span>
-                        <span className={`status-badge ${payment.paymentStatus}`}>
-                          {payment.paymentStatus}
-                        </span>
-                        <span className="processed-by">
-                          {payment.processedBy?.name || payment.processedBy?.username || '-'}
-                        </span>
-                        <span className="actions">
-                          <button
-                            onClick={() => startEditPayment(payment)}
-                            className="btn-edit"
-                            title="Edit Payment"
-                          >
-                            ✏️
-                          </button>
-                          <button
-                            onClick={() => resetPayment(paymentId)}
-                            className="btn-reset"
-                            title="Reset Payment"
-                          >
-                            🔄
-                          </button>
-                        </span>
-                      </>
-                    )}
-                  </div>
-                );
-                })}
-              </div>
-            ) : (
-              <div className="no-payments">
-                <p>No payment history found.</p>
-                <p>Payments you process will appear here.</p>
-              </div>
-            )}
-            
-            {/* Notes Edit Section */}
-            {editingPayment && (
-              <div className="edit-notes-section">
-                <h3>Edit Payment Notes</h3>
-                <textarea
-                  value={editData.paymentNotes}
-                  onChange={(e) => setEditData(prev => ({...prev, paymentNotes: e.target.value}))}
-                  placeholder="Add payment notes or update existing notes..."
-                  className="notes-textarea"
-                  rows={3}
-                  maxLength={200}
-                />
-                <div className="notes-info">
-                  <span>{editData.paymentNotes.length}/200 characters</span>
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-
         {/* Unpaid Participants Tab */}
         {activeTab === 'unpaid' && (
           <section className="unpaid-participants-section">
-            <h2>❌ Unpaid Participants</h2>
+            <h2>💳 Proceed to Pay</h2>
             <p>Mark participants as paid to update their payment status</p>
             
             {/* Search Bar */}
@@ -1286,10 +1270,12 @@ const CoordinatorDashboard: React.FC = () => {
                 {/* Autocomplete Suggestions */}
                 {showSuggestions && unpaidSearchQuery && (
                   <div className="search-suggestions">
-                    {unpaidParticipants
+                    {[...unpaidParticipants, ...paymentHistory]
                       .filter(participant => {
                         const query = unpaidSearchQuery.toLowerCase();
+                        const participantId = getParticipantId(participant);
                         return (
+                          (participantId || '').toLowerCase().includes(query) ||
                           (participant.participantId || '').toLowerCase().includes(query) ||
                           (participant.name || '').toLowerCase().includes(query) ||
                           (participant.event || '').toLowerCase().includes(query) ||
@@ -1297,28 +1283,33 @@ const CoordinatorDashboard: React.FC = () => {
                         );
                       })
                       .slice(0, 8) // Show max 8 suggestions
-                      .map((participant, index) => (
+                      .map((participant, index) => {
+                        const participantId = getParticipantId(participant);
+                        return (
                         <div
                           key={index}
                           className="suggestion-item"
                           onClick={() => {
-                            setUnpaidSearchQuery(participant.participantId);
+                            setUnpaidSearchQuery(participantId || participant.participantId);
                             setShowSuggestions(false);
                           }}
                         >
-                          <div className="suggestion-id">{participant.participantId}</div>
+                          <div className="suggestion-id">{participantId || participant.participantId}</div>
                           <div className="suggestion-details">
                             <span className="suggestion-name">{participant.name}</span>
                             <span className="suggestion-separator">•</span>
                             <span className="suggestion-event">{participant.event}</span>
                           </div>
-                          <div className="suggestion-amount">₹{(participant.remainingAmount || 0).toLocaleString('en-IN')}</div>
+                          <div className="suggestion-amount">₹{(participant.remainingAmount || participant.paidAmount || 0).toLocaleString('en-IN')}</div>
                         </div>
-                      ))}
+                      );
+                    })}
                     
-                    {unpaidParticipants.filter(participant => {
+                    {[...unpaidParticipants, ...paymentHistory].filter(participant => {
                       const query = unpaidSearchQuery.toLowerCase();
+                      const participantId = getParticipantId(participant);
                       return (
+                        (participantId || '').toLowerCase().includes(query) ||
                         (participant.participantId || '').toLowerCase().includes(query) ||
                         (participant.name || '').toLowerCase().includes(query) ||
                         (participant.event || '').toLowerCase().includes(query) ||
@@ -1348,9 +1339,9 @@ const CoordinatorDashboard: React.FC = () => {
             
             {loadingUnpaid ? (
               <div className="loading-message">
-                <p>⏳ Loading unpaid participants...</p>
+                <p>⏳ Loading participants...</p>
               </div>
-            ) : unpaidParticipants.length > 0 ? (
+            ) : filteredProceedToPayParticipants.length > 0 ? (
               <>
                 <div className="unpaid-participants-list">
                   <div className="unpaid-header">
@@ -1363,21 +1354,7 @@ const CoordinatorDashboard: React.FC = () => {
                     <span>Status</span>
                     <span>Actions</span>
                   </div>
-                  {unpaidParticipants
-                    .filter(participant => {
-                      // Apply search filter
-                      if (!unpaidSearchQuery) return true;
-                      
-                      const query = unpaidSearchQuery.toLowerCase();
-                      const participantId = getParticipantId(participant);
-                      return (
-                        (participantId || '').toLowerCase().includes(query) ||
-                        (participant.name || '').toLowerCase().includes(query) ||
-                        (participant.event || '').toLowerCase().includes(query) ||
-                        (participant.phoneNumber || '').includes(query) ||
-                        (participant.department || '').toLowerCase().includes(query)
-                      );
-                    })
+                  {filteredProceedToPayParticipants
                     .map((participant, index) => {
                       const participantId = getParticipantId(participant);
                       return (
@@ -1409,7 +1386,7 @@ const CoordinatorDashboard: React.FC = () => {
                           <input
                             type="number"
                             min="0"
-                            value={editedAmounts[participantId] ?? participant.remainingAmount}
+                            value={editedAmounts[participantId] !== undefined ? editedAmounts[participantId] : (participant.remainingAmount || 0)}
                             onChange={(e) => setEditedAmounts(prev => ({
                               ...prev,
                               [participantId]: parseFloat(e.target.value) || 0
@@ -1457,78 +1434,86 @@ const CoordinatorDashboard: React.FC = () => {
                       )}
                     </span>
                     <span className={`status-badge ${participant.paymentStatus}`}>
-                      {participant.paymentStatus}
+                      {participant.paymentStatus === 'paid' ? '✅ Paid' : '❌ Unpaid'}
                     </span>
                     <span className="actions">
-                      <select
-                        onChange={(e) => {
-                          if (e.target.value) {
-                            const amountToCharge = editedAmounts[participantId] ?? participant.remainingAmount;
-                            markAsPaid(participantId, e.target.value, amountToCharge);
-                            e.target.value = ''; // Reset select
-                          }
-                        }}
-                        disabled={markingPaid === participantId}
-                        className="payment-method-select"
-                        defaultValue=""
-                      >
-                        <option value="" disabled>
-                          {markingPaid === participantId ? '⏳ Processing...' : '💰 Mark as Paid'}
-                        </option>
-                        <option value="cash">💵 Cash</option>
-                        <option value="upi">📱 UPI</option>
-                      </select>
+                      {participant.paymentStatus === 'paid' ? (
+                        <div className="paid-status-indicator">
+                          <span className="paid-checkmark">✓ Paid</span>
+                        </div>
+                      ) : (
+                        <select
+                          onChange={(e) => {
+                            if (e.target.value) {
+                              const amountToCharge = editedAmounts[participantId] ?? participant.remainingAmount;
+                              markAsPaid(participantId, e.target.value, amountToCharge);
+                              e.target.value = ''; // Reset select
+                            }
+                          }}
+                          disabled={markingPaid === participantId}
+                          className="payment-method-select"
+                          defaultValue=""
+                        >
+                          <option value="" disabled>
+                            {markingPaid === participantId ? '⏳ Processing...' : '💰 Mark as Paid'}
+                          </option>
+                          <option value="cash">💵 Cash</option>
+                          <option value="upi">📱 UPI</option>
+                        </select>
+                      )}
                     </span>
                   </div>
                       );
                     })}
-                </div>
-                
-                {/* Show message if no results found */}
-                {unpaidParticipants.filter(participant => {
-                  if (!unpaidSearchQuery) return true;
-                  const query = unpaidSearchQuery.toLowerCase();
-                  return (
-                    (participant.participantId || '').toLowerCase().includes(query) ||
-                    (participant.name || '').toLowerCase().includes(query) ||
-                    (participant.event || '').toLowerCase().includes(query) ||
-                    (participant.phoneNumber || '').includes(query) ||
-                    (participant.department || '').toLowerCase().includes(query)
-                  );
-                }).length === 0 && unpaidSearchQuery && (
-                  <div className="no-search-results">
-                    <p>No participants found matching "{unpaidSearchQuery}"</p>
-                    <button onClick={() => setUnpaidSearchQuery('')} className="clear-search-btn">
-                      Clear Search
-                    </button>
                   </div>
-                )}
-              </>
-            ) : (
-              <div className="no-unpaid">
-                <div className="success-state">
-                  <h3>🎉 Great Job!</h3>
-                  <p>All participants in your events have completed their payments!</p>
-                  <p>There are no pending payments at this time.</p>
+                  
+                  {/* Show message if no results found */}
+                  {filteredProceedToPayParticipants.length === 0 && unpaidSearchQuery && (
+                    <div className="no-search-results">
+                      <p>No participants found matching "{unpaidSearchQuery}"</p>
+                      <button onClick={() => setUnpaidSearchQuery('')} className="clear-search-btn">
+                        Clear Search
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="no-unpaid">
+                  <div className="success-state">
+                    <h3>🎉 Great Job!</h3>
+                    <p>All participants in your events have completed their payments!</p>
+                    <p>There are no pending payments at this time.</p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Quick Stats */}
-            {unpaidParticipants.length > 0 && (
-              <div className="unpaid-stats">
-                <div className="stat-card">
-                  <span className="stat-number">{unpaidParticipants.length}</span>
-                  <span className="stat-label">Unpaid Participants</span>
+            {(() => {
+              const allParticipants = [...unpaidParticipants, ...paymentHistory];
+              const paidCount = allParticipants.filter(p => p.paymentStatus === 'paid').length;
+              const totalPaid = allParticipants
+                .filter(p => p.paymentStatus === 'paid')
+                .reduce((sum, p) => sum + (p.paidAmount || 0), 0);
+              
+              return allParticipants.length > 0 && (
+                <div className="unpaid-stats">
+                  <div className="stat-card">
+                    <span className="stat-number">{paidCount}</span>
+                    <span className="stat-label">Paid Participants</span>
+                  </div>
+                  <div className="stat-card">
+                    <span className="stat-number">{allParticipants.length}</span>
+                    <span className="stat-label">Total Participants</span>
+                  </div>
+                  <div className="stat-card">
+                    <span className="stat-number">
+                      ₹{totalPaid.toLocaleString('en-IN')}
+                    </span>
+                    <span className="stat-label">Total Collected</span>
+                  </div>
                 </div>
-                <div className="stat-card">
-                  <span className="stat-number">
-                    ₹{unpaidParticipants.reduce((sum, p) => sum + (p.remainingAmount || 0), 0).toLocaleString('en-IN')}
-                  </span>
-                  <span className="stat-label">Total Outstanding</span>
-                </div>
-              </div>
-            )}
+              );
+            })()}
           </section>
         )}
 
@@ -1738,6 +1723,18 @@ const CoordinatorDashboard: React.FC = () => {
           </section>
         )}
       </div>
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className={`toast-notification ${toast.type}`}>
+          <div className="toast-content">
+            <span className="toast-icon">
+              {toast.type === 'success' ? '✅' : '❌'}
+            </span>
+            <span className="toast-message">{toast.message}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

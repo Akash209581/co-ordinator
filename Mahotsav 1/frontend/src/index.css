@@ -1,13 +1,706 @@
+/* ============================================
+   MAHOTSAV THEME - Professional UI System
+   Based on Eternal Harmony Design
+   ============================================ */
+
+/* === PROFESSIONAL FONT IMPORT === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* === PRIMARY PALETTE (Extracted from Mahotsav Image) === */
+  --primary-deep-purple: #3d2766;
+  --primary-mid-purple: #5a3d7a;
+  --primary-light-purple: #7a4d9e;
+  --primary-soft-purple: #9e6bb8;
+  
+  /* === ACCENT COLORS === */
+  --accent-gold: #f4d03f;
+  --accent-gold-bright: #ffd700;
+  --accent-lotus-pink: #d896c9;
+  --accent-pink-light: #e5b3d8;
+  
+  /* === DYNAMIC TEXT COLORS (Intelligent Contrast) === */
+  --text-on-dark: #ffffff;
+  --text-on-light: #000000;
+  --text-on-dark-secondary: rgba(255, 255, 255, 0.85);
+  --text-on-light-secondary: rgba(0, 0, 0, 0.7);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.65);
+  --text-on-light-muted: rgba(0, 0, 0, 0.5);
+  
+  /* === SURFACE DEFINITIONS === */
+  /* Dark Glass Surfaces (White Text) */
+  --glass-bg-dark: rgba(61, 39, 102, 0.75);
+  --glass-bg-medium: rgba(90, 61, 122, 0.70);
+  --glass-bg-light: rgba(122, 77, 158, 0.65);
+  --glass-bg-translucent: rgba(0, 0, 0, 0.4);
+  --glass-border-dark: rgba(255, 255, 255, 0.18);
+  
+  /* Light Glass Surfaces (Black Text) */
+  --glass-bg-white: rgba(255, 255, 255, 0.95);
+  --glass-bg-white-translucent: rgba(255, 255, 255, 0.85);
+  --glass-bg-white-subtle: rgba(255, 255, 255, 0.75);
+  --glass-border-light: rgba(0, 0, 0, 0.1);
+  
+  /* === PROFESSIONAL EFFECTS === */
+  --blur-strong: blur(16px) saturate(180%);
+  --blur-medium: blur(12px) saturate(180%);
+  --blur-light: blur(8px) saturate(150%);
+  
+  /* === SHADOWS === */
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-light-surface: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
+  /* === BORDER RADIUS === */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+/* === GLOBAL BACKGROUND === */
+html {
+  min-height: 100vh;
+  background: url('./assets/mohotsav.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+html::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    rgba(0, 0, 0, 0.45) 50%, 
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  min-height: 100vh;
+  background: transparent;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 
+    'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--text-on-dark);
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.01em;
+  line-height: 1.6;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 
+    'Source Code Pro', monospace;
+}
+
+/* ================================================
+   DYNAMIC CONTRAST SURFACE SYSTEM
+   ================================================ */
+
+/* === DARK SURFACES (White Text) === */
+.surface-dark,
+.glass-container,
+.glass-elevated,
+.dashboard-header,
+.dashboard-nav,
+.stat-card,
+.action-card {
+  background: var(--glass-bg-dark);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  border: 1px solid var(--glass-border-dark);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-md);
+  color: var(--text-on-dark);
+}
+
+.surface-dark *,
+.glass-container *,
+.glass-elevated *,
+.dashboard-header *,
+.dashboard-nav *,
+.stat-card *,
+.action-card * {
+  color: var(--text-on-dark);
+}
+
+/* === LIGHT SURFACES (Black Text) === */
+.surface-light,
+.card-light,
+.modal-content,
+.participant-details,
+.payment-form,
+.team-creation-container,
+.member-item,
+.info-card,
+.participant-preview {
+  background: var(--glass-bg-white);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  border: 1px solid var(--glass-border-light);
+  box-shadow: var(--shadow-light-surface);
+  border-radius: var(--radius-md);
+  color: var(--text-on-light);
+}
+
+.surface-light *,
+.card-light *,
+.modal-content *,
+.participant-details *,
+.payment-form *,
+.team-creation-container *,
+.member-item *,
+.info-card *,
+.participant-preview * {
+  color: var(--text-on-light);
+  text-shadow: none;
+}
+
+/* === SEMI-TRANSPARENT DARK SURFACES === */
+.glass-subtle,
+.activities-list,
+.payment-history-list,
+.unpaid-participants-list,
+.team-table-container {
+  background: var(--glass-bg-translucent);
+  backdrop-filter: var(--blur-light);
+  -webkit-backdrop-filter: var(--blur-light);
+  border: 1px solid var(--glass-border-dark);
+  box-shadow: var(--shadow-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-on-dark);
+}
+
+.glass-subtle *,
+.activities-list *,
+.payment-history-list *,
+.unpaid-participants-list *,
+.team-table-container * {
+  color: var(--text-on-dark);
+}
+
+/* === ACCENT BORDERS (Dashboard Hero Elements) === */
+.accent-border-gold {
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 0 20px rgba(244, 208, 63, 0.4);
+}
+
+.accent-border-lotus {
+  border: 2px solid var(--accent-lotus-pink);
+  box-shadow: 0 0 16px rgba(216, 150, 201, 0.3);
+}
+
+/* === SCROLLBAR STYLING === */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-soft-purple) var(--glass-bg-dark);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--glass-bg-dark);
+  border-radius: var(--radius-sm);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--primary-soft-purple);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--glass-bg-dark);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-lotus-pink);
+}
+
+/* === SELECTION STYLING === */
+::selection {
+  background: var(--accent-gold);
+  color: var(--primary-deep-purple);
+}
+
+::-moz-selection {
+  background: var(--accent-gold);
+  color: var(--primary-deep-purple);
+}
+
+/* === PROFESSIONAL TYPOGRAPHY SYSTEM === */
+
+/* Typography on Dark Surfaces (White Text) */
+.surface-dark h1,
+.surface-dark h2,
+.surface-dark h3,
+.surface-dark h4,
+.surface-dark h5,
+.surface-dark h6,
+.glass-container h1,
+.glass-container h2,
+.glass-container h3,
+.glass-elevated h1,
+.glass-elevated h2,
+.dashboard-header h1,
+.dashboard-header h2 {
+  color: var(--text-on-dark);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Typography on Light Surfaces (Black Text) */
+.surface-light h1,
+.surface-light h2,
+.surface-light h3,
+.surface-light h4,
+.surface-light h5,
+.surface-light h6,
+.card-light h1,
+.card-light h2,
+.card-light h3,
+.modal-content h1,
+.modal-content h2,
+.modal-content h3,
+.participant-details h3,
+.payment-form h4 {
+  color: var(--text-on-light);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Default Heading Styles (Inherit from parent surface) */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* === PARAGRAPH & INLINE TEXT === */
+.surface-dark p,
+.surface-dark span,
+.surface-dark label,
+.glass-container p,
+.glass-container span {
+  color: var(--text-on-dark-secondary);
+  letter-spacing: -0.01em;
+}
+
+.surface-light p,
+.surface-light span,
+.surface-light label,
+.card-light p,
+.modal-content p,
+.participant-details p {
+  color: var(--text-on-light-secondary);
+  letter-spacing: -0.01em;
+  text-shadow: none;
+}
+
+/* === LABELS === */
+.surface-dark label,
+label.on-dark {
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-on-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.surface-light label,
+label.on-light {
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-on-light);
+  text-shadow: none;
+}
+
+/* === FORM INPUTS === */
+.surface-dark input,
+.surface-dark select,
+.surface-dark textarea {
+  color: var(--text-on-dark) !important;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border-dark);
+  -webkit-text-fill-color: var(--text-on-dark);
+}
+
+.surface-dark input::placeholder,
+.surface-dark textarea::placeholder {
+  color: var(--text-on-dark-muted) !important;
+  -webkit-text-fill-color: var(--text-on-dark-muted);
+}
+
+.surface-light input,
+.surface-light select,
+.surface-light textarea {
+  color: var(--text-on-light) !important;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--glass-border-light);
+  -webkit-text-fill-color: var(--text-on-light);
+}
+
+.surface-light input::placeholder,
+.surface-light textarea::placeholder {
+  color: var(--text-on-light-muted) !important;
+  -webkit-text-fill-color: var(--text-on-light-muted);
+}
+
+/* === TABLE STYLING === */
+.surface-dark table th,
+.surface-dark table td {
+  color: var(--text-on-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.surface-light table th,
+.surface-light table td {
+  color: var(--text-on-light);
+  text-shadow: none;
+}
+
+/* === LINK STYLING === */
+.surface-dark a {
+  color: var(--accent-gold-bright);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.surface-dark a:hover {
+  color: var(--accent-gold);
+  text-shadow: 0 0 8px rgba(244, 208, 63, 0.5);
+}
+
+.surface-light a {
+  color: var(--primary-mid-purple);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.surface-light a:hover {
+  color: var(--primary-deep-purple);
+  text-decoration: underline;
+}
+
+/* === EMOJI REMOVAL === */
+.emoji,
+[class*="emoji"],
+[data-emoji],
+*[aria-label*="emoji"] {
+  display: none !important;
+  visibility: hidden !important;
+  font-size: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Prevent emoji rendering in pseudo-elements */
+*::before,
+*::after {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Remove emoji from text nodes */
+* {
+  font-variant-emoji: text;
+}
+
+/* === STATUS COLORS (Universal across surfaces) === */
+.status-paid,
+.success-text,
+.badge-success {
+  color: #10b981 !important;
+  font-weight: 600;
+}
+
+.status-pending,
+.warning-text,
+.badge-warning {
+  color: #f59e0b !important;
+  font-weight: 600;
+}
+
+.status-unpaid,
+.error-text,
+.badge-error {
+  color: #ef4444 !important;
+  font-weight: 600;
+}
+
+/* === STATUS BADGES === */
+.badge,
+.tag,
+.chip {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.surface-dark .badge,
+.surface-dark .tag {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-on-dark);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.surface-light .badge,
+.surface-light .tag {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-on-light);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.badge.success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.badge.warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.badge.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ================================================
+   COMPONENT-SPECIFIC OVERRIDES
+   ================================================ */
+
+/* === DASHBOARD STATS === */
+.stat-card {
+  background: var(--glass-bg-dark);
+  color: var(--text-on-dark);
+}
+
+.stat-number {
+  color: var(--text-on-dark);
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+  color: var(--text-on-dark-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* === ACTION CARDS === */
+.action-card {
+  background: var(--glass-bg-medium);
+  color: var(--text-on-dark);
+}
+
+.action-title {
+  color: var(--text-on-dark);
+  font-weight: 600;
+}
+
+.action-description {
+  color: var(--text-on-dark-secondary);
+}
+
+/* === DATA TABLES === */
+.payment-history-section,
+.unpaid-participants-section,
+.team-registration-section {
+  background: var(--glass-bg-dark);
+  color: var(--text-on-dark);
+}
+
+.payment-history-section h2,
+.payment-history-section p,
+.unpaid-participants-section h2,
+.unpaid-participants-section p,
+.team-registration-section h2,
+.team-registration-section p {
+  color: var(--text-on-dark);
+}
+
+/* === MODALS & LIGHT CARDS === */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--glass-bg-white);
+  color: var(--text-on-light);
+}
+
+.modal-header {
+  background: var(--primary-mid-purple);
+  color: var(--text-on-dark);
+}
+
+.modal-header h2,
+.modal-header h3 {
+  color: var(--text-on-dark);
+}
+
+.modal-body h3,
+.modal-body h4,
+.modal-body p,
+.modal-body span,
+.modal-body label {
+  color: var(--text-on-light);
+}
+
+/* === FORM ELEMENTS === */
+input,
+select,
+textarea {
+  font-weight: 400;
+  font-size: 1rem;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(244, 208, 63, 0.2);
+}
+
+/* === BUTTONS === */
+button {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-btn {
+  background: var(--accent-gold);
+  color: #000000;
+  box-shadow: 0 2px 8px rgba(244, 208, 63, 0.3);
+}
+
+.primary-btn:hover {
+  background: var(--accent-gold-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 208, 63, 0.4);
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-on-dark);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* === SEARCH & FILTERS === */
+.search-input,
+.filter-select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border-dark);
+  color: var(--text-on-dark);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+}
+
+.search-input::placeholder {
+  color: var(--text-on-dark-muted);
+}
+
+/* === LOADING & EMPTY STATES === */
+.loading-container,
+.empty-state,
+.no-data-message {
+  color: var(--text-on-dark-secondary);
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state h3 {
+  color: var(--text-on-dark);
+  margin-bottom: 8px;
+}
+
+/* === RESPONSIVE TEXT SIZING === */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
 }
